@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Current Affairs & Quiz App</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; margin: 0; padding: 10px; }
+        .container { max-width: 600px; margin: auto; background: white; padding: 15px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        
+        /* Ad Banner Style */
+        .ad-space { background: #e2e2e2; border: 1px dashed #999; text-align: center; padding: 10px; margin: 10px 0; color: #666; font-size: 12px; min-height: 50px; }
+        
+        .settings-box { background: #fff3cd; padding: 10px; border-radius: 8px; margin-bottom: 15px; border: 1px solid #ffeeba; }
+        .tabs { display: flex; gap: 5px; overflow-x: auto; padding-bottom: 10px; }
+        button { padding: 8px 12px; border: none; border-radius: 20px; cursor: pointer; background: #007bff; color: white; white-space: nowrap; }
+        
+        .quiz-card { border: 1px solid #ddd; padding: 15px; border-radius: 8px; margin-top: 15px; }
+        .option { display: block; background: #f8f9fa; padding: 10px; margin: 5px 0; border-radius: 5px; cursor: pointer; border: 1px solid #eee; }
+        .option:hover { background: #e9ecef; }
+        .result { font-weight: bold; margin-top: 10px; padding: 10px; border-radius: 5px; display: none; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="ad-space">
+        ADVERTISEMENT BANNER (TOP)
+    </div>
+
+    <h1>Current Affairs Jan 2026</h1>
+
+    <div class="settings-box">
+        <label><b>Negative Marking Set Karein:</b> </label>
+        <input type="number" id="negVal" value="0.33" step="0.01" style="width: 60px;">
+    </div>
+
+    <div class="tabs">
+        <button onclick="filterContent('all')">All News</button>
+        <button onclick="showQuiz()">Practice Quiz</button>
+        <button onclick="filterContent('National')">National</button>
+        <button onclick="filterContent('Bihar Special')">Bihar Special</button>
+    </div>
+
+    <div id="main-area">
+        </div>
+
+    <div class="ad-space" style="margin-top:20px;">
+        ADVERTISEMENT BANNER (BOTTOM)
+    </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
