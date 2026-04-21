@@ -3,71 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Current Affairs & Quiz App</title>
+    <title>BPSC Current Affairs App</title>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; margin: 0; padding: 10px; }
-        .container { max-width: 600px; margin: auto; background: white; padding: 15px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        
-        /* Ad Banner Style */
-        .ad-space { background: #e2e2e2; border: 1px dashed #999; text-align: center; padding: 10px; margin: 10px 0; color: #666; font-size: 12px; min-height: 50px; }
-        
-        .settings-box { background: #fff3cd; padding: 10px; border-radius: 8px; margin-bottom: 15px; border: 1px solid #ffeeba; }
-        .tabs { display: flex; gap: 5px; overflow-x: auto; padding-bottom: 10px; }
-        button { padding: 8px 12px; border: none; border-radius: 20px; cursor: pointer; background: #007bff; color: white; white-space: nowrap; }
-        
-        .quiz-card { border: 1px solid #ddd; padding: 15px; border-radius: 8px; margin-top: 15px; }
-        .option { display: block; background: #f8f9fa; padding: 10px; margin: 5px 0; border-radius: 5px; cursor: pointer; border: 1px solid #eee; }
-        .option:hover { background: #e9ecef; }
+        body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; margin: 0; padding: 10px; line-height: 1.6; }
+        .container { max-width: 600px; margin: auto; background: white; padding: 15px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); min-height: 90vh; }
+        .ad-space { background: #eee; text-align: center; padding: 15px; margin: 10px 0; border: 1px dashed #bbb; font-size: 12px; }
+        h1, h2 { color: #2c3e50; text-align: center; }
+        .btn-grid { display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 20px; }
+        .tab-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 15px; }
+        button { padding: 15px; border: none; border-radius: 8px; cursor: pointer; background: #007bff; color: white; font-weight: bold; font-size: 16px; }
+        button:hover { background: #0056b3; }
+        .back-btn { background: #6c757d; padding: 8px 15px; margin-bottom: 15px; font-size: 14px; width: 80px; }
+        .settings-box { background: #fff3cd; padding: 10px; border-radius: 8px; margin-bottom: 15px; font-size: 14px; text-align: center; }
+        .quiz-card { border: 1px solid #ddd; padding: 15px; border-radius: 8px; margin-top: 15px; background: #fff; }
+        .option { display: block; background: #f8f9fa; padding: 12px; margin: 8px 0; border-radius: 5px; cursor: pointer; border: 1px solid #dee2e6; }
+        .option:hover { background: #e2e6ea; }
         .result { font-weight: bold; margin-top: 10px; padding: 10px; border-radius: 5px; display: none; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div class="ad-space">ADVERTISEMENT BANNER (TOP)</div>
+    <div class="ad-space">AD BANNER TOP (Paste Adsense Code Here)</div>
 
     <div id="step1">
-        <h2>Select Category</h2>
-        <button onclick="goToStep2('Current Affairs')">Current Affairs</button>
-        <button onclick="goToStep2('Static GK')">Static GK</button>
+        <h1>Prep App</h1>
+        <div class="btn-grid">
+            <button onclick="nav(2, 'Current Affairs')">Current Affairs</button>
+            <button onclick="nav(2, 'Static GK')">Static GK</button>
+        </div>
     </div>
 
     <div id="step2" style="display:none;">
-        <button onclick="backToStep(1)">← Back</button>
-        <h2>Select Month</h2>
-        <div class="tabs">
-            <button onclick="goToStep3('Jan 2026')">January 2026</button>
-            <button onclick="goToStep3('Feb 2026')">February 2026</button>
+        <button class="back-btn" onclick="nav(1)">← Back</button>
+        <h2 id="cat-title"></h2>
+        <div class="btn-grid">
+            <button onclick="nav(3, 'Jan 2026')">January 2026</button>
+            <button onclick="nav(3, 'Feb 2026')">February 2026</button>
         </div>
     </div>
 
     <div id="step3" style="display:none;">
-        <button onclick="backToStep(2)">← Back</button>
-        <h2 id="selected-path"></h2>
+        <button class="back-btn" onclick="nav(2)">← Back</button>
+        <h2 id="path-display"></h2>
         
         <div class="settings-box">
-            <label>Negative Marking: </label>
-            <input type="number" id="negVal" value="0.33" step="0.01" style="width: 50px;">
+            Negative Marking: <input type="number" id="negVal" value="0.33" step="0.01" style="width: 50px;">
         </div>
 
-        <div class="tabs">
-            <button onclick="loadContent('National')">National</button>
-            <button onclick="loadContent('International')">International</button>
-            <button onclick="loadContent('Bihar Special')">Bihar Special</button>
+        <div class="tab-grid">
+            <button onclick="loadQuiz('National')">National</button>
+            <button onclick="loadQuiz('International')">International</button>
+            <button onclick="loadQuiz('Bihar Special')">Bihar Special</button>
+            <button onclick="loadQuiz('Economy')">Economy</button>
         </div>
 
-        <div id="main-area"></div>
+        <div id="quiz-area"></div>
     </div>
 
-    <div class="ad-space">ADVERTISEMENT BANNER (BOTTOM)</div>
-</div>
-
-    <div id="main-area">
-        </div>
-
-    <div class="ad-space" style="margin-top:20px;">
-        ADVERTISEMENT BANNER (BOTTOM)
-    </div>
+    <div class="ad-space">AD BANNER BOTTOM (Paste Adsense Code Here)</div>
 </div>
 
 <script src="app.js"></script>
