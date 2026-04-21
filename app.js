@@ -1,3 +1,4 @@
+// --- Global Variables ---
 let currentCat = "", currentMonth = "", currentTopic = "";
 let questions = [];
 let currentIndex = 0;
@@ -5,46 +6,48 @@ let userAnswers = {};
 let timer, timeLeft;
 
 // ======================================================
-// 🎯 EXACT LOCATION: YAHAN QUESTION PASTE KAREIN
+// 🎯 DATA CENTER: SARE QUESTIONS YAHAN HAIN
 // ======================================================
 const myData = {
     "Jan 2026": {
-        "Bihar": [
+        "National": [
             { 
-                q: "विंग्स इंडिया 2026 के दौरान बिहार को किस श्रेणी में राष्ट्रीय पुरस्कार से सम्मानित किया गया?", a: ["क्षेत्रीय संपर्क योजना (RCS) - उड़ान", "कृषि विकास", "डिजिटल शिक्षा", "पर्यटन"], c: 0, e: "बिहार को उत्तर प्रदेश के साथ संयुक्त रूप से 'सर्वाधिक सक्रिय राज्य' श्रेणी में यह पुरस्कार मिला।" },
-    { q: "कैथी लिपि के ऐतिहासिक दस्तावेजों को देवनागरी में रूपांतरित करने के लिए कितने विशेषज्ञों का पैनल गठित किया गया है?", a: ["15", "29", "40", "50"], c: 1, e: "राजस्व एवं भूमि सुधार विभाग ने 29 प्रशिक्षित अनुवादकों का पैनल बनाया है।" },
-    { q: "1 जनवरी 2026 को बिहार बटालियन की कौन सी स्थापना वर्षगांठ मनाई गई?", a: ["8वीं की 50वीं", "12वीं की 40वीं", "8वीं की 60वीं और 12वीं की 49वीं", "दोनों की 50वीं"], c: 2, e: "8वीं बिहार बटालियन की स्थापना 1965 और 12वीं की 1976 में हुई थी।" },
-    { q: "पटना उच्च न्यायालय के 47वें मुख्य न्यायाधीश के रूप में किसने शपथ ली?", a: ["न्यायमूर्ति के. विनोद चंद्रन", "न्यायमूर्ति संगम कुमार साहू", "न्यायमूर्ति प्रवीण कुमार", "न्यायमूर्ति ऋतेश कुमार"], c: 1, e: "न्यायमूर्ति संगम कुमार साहू ने 7 जनवरी 2026 को शपथ ली।" },
-    { q: "आईआईटी पटना में बन रहा आधुनिक अनुसंधान पार्क किस मॉडल पर आधारित है?", a: ["आईआईटी दिल्ली", "आईआईटी बॉम्बे", "आईआईटी मद्रास", "आईआईटी कानपुर"], c: 2, e: "यह पार्क 15,000 वर्ग फुट में आईआईटी मद्रास के मॉडल पर विकसित किया जा रहा है।" },
-    { q: "13 जनवरी 2026 को हुई मंत्रिपरिषद की बैठक में कुल कितने प्रस्तावों को मंजूरी दी गई?", a: ["32", "43", "50", "25"], c: 1, e: "मुख्यमंत्री नीतीश कुमार की अध्यक्षता में 43 प्रस्तावों को स्वीकृति मिली।" },
-    { q: "सोन नदी जल-बंटवारे विवाद के तहत झारखंड को कितना जल आवंटित किया जाएगा?", a: ["7.75 मिलियन एकड़-फुट", "5.75 मिलियन एकड़-फुट", "2.00 मिलियन एकड़-फुट", "1.50 मिलियन एकड़-फुट"], c: 2, e: "सहमति के अनुसार बिहार को 5.75 और झारखंड को 2.00 मिलियन एकड़-फुट जल मिलेगा।" },
-    { q: "पटना में विद्युत आपूर्ति को सुधारने के लिए कितने करोड़ की भूमिगत केबलिंग परियोजना को मंजूरी दी गई?", a: ["500 करोड़", "653 करोड़", "800 करोड़", "1000 करोड़"], c: 1, e: "यह परियोजना पटना के 13 प्रमंडलों में लागू की जाएगी।" },
-    { q: "पीएम श्री (PM Shri) योजना के तहत बिहार के कितने स्कूलों के लिए निधि स्वीकृत की गई?", a: ["500", "789", "1000", "1200"], c: 1, e: "789 स्कूलों के लिए ₹14.855 अरब की राशि स्वीकृत की गई।" },
-    { q: "मुंबई में 'बिहार भवन' के निर्माण हेतु कितनी राशि की प्रशासनिक स्वीकृति दी गई?", a: ["₹100 करोड़", "₹200.5 करोड़", "₹314.2 करोड़", "₹500 करोड़"], c: 2, e: "यह भवन मुंबई आने वाले बिहार के नागरिकों और अधिकारियों की सुविधा के लिए होगा।" },
-    { q: "मुख्यमंत्री फेलोशिप योजना के तहत चयनित फेलो को प्रतिमाह कितना मानदेय दिया जाएगा?", a: ["₹25,000 - ₹50,000", "₹50,000 - ₹1,50,000", "₹10,000 - ₹20,000", "₹1,00,000 निश्चित"], c: 1, e: "मानदेय शैक्षणिक योग्यता और अनुभव के आधार पर तय होगा।" },
-    { q: "मुख्यमंत्री फेलोशिप योजना के तहत कितने फेलो का चयन किया जाएगा?", a: ["50", "100", "121", "200"], c: 2, e: "योजना के तहत कुल 121 फेलो 2 वर्ष की अवधि के लिए चुने जाएंगे।" },
-    { q: "बिहार राज्य पुलिस सम्मेलन 2026 का आयोजन कहाँ किया गया?", a: ["राजगीर", "बोधगया", "पटना", "मुजफ्फरपुर"], c: 2, e: "इसका आयोजन 12-13 जनवरी 2026 को सरदार पटेल भवन, पटना में हुआ।" },
-    { q: "बिहार पुलिस की कौन सी नई इकाई का शुभारंभ सम्मेलन के दौरान किया गया?", a: ["STF", "साइबर अपराध एवं सुरक्षा इकाई", "महिला सेल", "पर्यटन पुलिस"], c: 1, e: "इसका उद्देश्य तकनीक-आधारित अपराधों से निपटना है।" },
-    { q: "वर्तमान में पटना उच्च न्यायालय में न्यायाधीशों के कुल कितने पद रिक्त हैं?", a: ["10", "16", "20", "5"], c: 1, e: "दो नए न्यायाधीशों की नियुक्ति के बाद अब 53 स्वीकृत पदों में से 16 रिक्त हैं।" },
-    { q: "बिहार ने किस वर्ष तक राज्य को पूरी तरह 'कालाजार-मुक्त' बनाने का लक्ष्य रखा है?", a: ["2025", "2026", "2027", "2030"], c: 2, e: "2023 में ब्लॉक स्तर पर उन्मूलन के बाद अब 2027 तक पूर्ण मुक्ति का लक्ष्य है।" },
-    { q: "कालाजार किस परजीवी के कारण होता है?", a: ["प्लाज्मोडियम", "लीशमैनिया", "ट्रिपैनोसोमा", "एंटअमीबा"], c: 1, e: "इसे विसरल लीशमैनियासिस (VL) भी कहा जाता है।" },
-    { q: "डॉ. वीरेंद्र कुमार भारद्वाज को किस पुस्तक के लिए 'राजनारायण चौधरी बाल साहित्य पुरस्कार' मिला?", a: ["जादू का पिटारा", "देखो मस्त मदारी आया", "बिहार की गाथा", "नन्हे कदम"], c: 1, e: "यह 58 कविताओं का एक बाल कविता संग्रह है।" },
-    { q: "बिहार और पटना संग्रहालय को जोड़ने वाली भूमिगत सुरंग की लंबाई कितनी होगी?", a: ["1 किमी", "1.5 किमी", "2 किमी", "3 किमी"], c: 1, e: "यह 1.5 किमी लंबी सुरंग विश्व स्तर की 'हेरिटेज टनल' होगी।" },
-    { q: "बिहार के सामान्य प्रशासन विभाग को कौन सा ISO प्रमाणन प्राप्त हुआ है?", a: ["ISO 14001", "ISO 9001:2015", "ISO 27001", "ISO 45001"], c: 1, e: "यह प्रमाणन कर्मचारी प्रबंधन और प्रशासनिक सुधारों के लिए दिया गया है।"}
+                q: "विंग्स इंडिया 2026 के दौरान बिहार को किस श्रेणी में राष्ट्रीय पुरस्कार से सम्मानित किया गया?", 
+                options: ["क्षेत्रीय संपर्क योजना (RCS) - उड़ान", "कृषि विकास", "डिजिटल शिक्षा", "पर्यटन"], 
+                ans: 0, 
+                explanation: "बिहार को उत्तर प्रदेश के साथ संयुक्त रूप से 'सर्वाधिक सक्रिय राज्य' श्रेणी में यह पुरस्कार मिला।" 
+            },
+            { 
+                q: "बिहार के सामान्य प्रशासन विभाग को कौन सा ISO प्रमाणन प्राप्त हुआ है?", 
+                options: ["ISO 14001", "ISO 9001:2015", "ISO 27001", "ISO 45001"], 
+                ans: 1, 
+                explanation: "यह प्रमाणन कर्मचारी प्रबंधन और प्रशासनिक सुधारों के लिए दिया गया है।" 
+            }
         ],
         "Bihar Special": [
-            { 
-                q: "Bihar ke kis jile mein naye IT Park ka udghatan hua?", 
-                options: ["Patna", "Gaya", "Bhagalpur", "Muzaffarpur"], 
-                ans: 0,
-                explanation: "Patna ke Bihta ilake mein naya IT hub banaya gaya hai."
-            },
-            // Naye Bihar Special questions yahan paste karein
+            { q: "कैथी लिपि के ऐतिहासिक दस्तावेजों को देवनागरी में रूपांतरित करने के लिए कितने विशेषज्ञों का पैनल गठित किया गया है?", options: ["15", "29", "40", "50"], ans: 1, explanation: "राजस्व एवं भूमि सुधार विभाग ने 29 प्रशिक्षित अनुवादकों का पैनल बनाया है।" },
+            { q: "1 जनवरी 2026 को बिहार बटालियन की कौन सी स्थापना वर्षगांठ मनाई गई?", options: ["8वीं की 50वीं", "12वीं की 40वीं", "8वीं की 60वीं और 12वीं की 49वीं", "दोनों की 50वीं"], ans: 2, explanation: "8वीं बिहार बटालियन की स्थापना 1965 और 12वीं की 1976 में हुई थी।" },
+            { q: "पटना उच्च न्यायालय के 47वें मुख्य न्यायाधीश के रूप में किसने शपथ ली?", options: ["न्यायमूर्ति के. विनोद चंद्रन", "न्यायमूर्ति संगम कुमार साहू", "न्यायमूर्ति प्रवीण कुमार", "न्यायमूर्ति ऋतेश कुमार"], ans: 1, explanation: "न्यायमूर्ति संगम कुमार साहू ने 7 जनवरी 2026 को शपथ ली।" },
+            { q: "आईआईटी पटना में बन रहा आधुनिक अनुसंधान पार्क किस मॉडल पर आधारित है?", options: ["आईआईटी दिल्ली", "आईआईटी बॉम्बे", "आईआईटी मद्रास", "आईआईटी कानपुर"], ans: 2, explanation: "यह पार्क 15,000 वर्ग फुट में आईआईटी मद्रास के मॉडल पर विकसित किया जा रहा है।" },
+            { q: "13 जनवरी 2026 को हुई मंत्रिपरिषद की बैठक में कुल कितने प्रस्तावों को मंजूरी दी गई?", options: ["32", "43", "50", "25"], ans: 1, explanation: "मुख्यमंत्री नीतीश कुमार की अध्यक्षता में 43 प्रस्तावों को स्वीकृति मिली।" },
+            { q: "सोन नदी जल-बंटवारे विवाद के तहत झारखंड को कितना जल आवंटित किया जाएगा?", options: ["7.75 मिलियन एकड़-फुट", "5.75 मिलियन एकड़-फुट", "2.00 मिलियन एकड़-फुट", "1.50 मिलियन एकड़-फुट"], ans: 2, explanation: "सहमति के अनुसार बिहार को 5.75 और झारखंड को 2.00 मिलियन एकड़-फुट जल मिलेगा।" },
+            { q: "पटना में विद्युत आपूर्ति को सुधारने के लिए कितने करोड़ की भूमिगत केबलिंग परियोजना को मंजूरी दी गई?", options: ["500 करोड़", "653 करोड़", "800 करोड़", "1000 करोड़"], ans: 1, explanation: "यह परियोजना पटना के 13 प्रमंडलों में लागू की जाएगी।" },
+            { q: "पीएम श्री (PM Shri) योजना के तहत बिहार के कितने स्कूलों के लिए निधि स्वीकृत की गई?", options: ["500", "789", "1000", "1200"], ans: 1, explanation: "789 स्कूलों के लिए ₹14.855 अरब की राशि स्वीकृत की गई।" },
+            { q: "मुंबई में 'बिहार भवन' के निर्माण हेतु कितनी राशि की प्रशासनिक स्वीकृति दी गई?", options: ["₹100 करोड़", "₹200.5 करोड़", "₹314.2 करोड़", "₹500 करोड़"], ans: 2, explanation: "यह भवन मुंबई आने वाले बिहार के नागरिकों और अधिकारियों की सुविधा के लिए होगा।" },
+            { q: "मुख्यमंत्री फेलोशिप योजना के तहत चयनित फेलो को प्रतिमाह कितना मानदेय दिया जाएगा?", options: ["₹25,000 - ₹50,000", "₹50,000 - ₹1,50,000", "₹10,000 - ₹20,000", "₹1,00,000 निश्चित"], ans: 1, explanation: "मानदेय शैक्षणिक योग्यता और अनुभव के आधार पर तय होगा।" },
+            { q: "मुख्यमंत्री फेलोशिप योजना के तहत कितने फेलो का चयन किया जाएगा?", options: ["50", "100", "121", "200"], ans: 2, explanation: "योजना के तहत कुल 121 फेलो 2 वर्ष की अवधि के लिए चुने जाएंगे।" },
+            { q: "बिहार राज्य पुलिस सम्मेलन 2026 का आयोजन कहाँ किया गया?", options: ["राजगीर", "बोधगया", "पटना", "मुजफ्फरपुर"], ans: 2, explanation: "इसका आयोजन 12-13 जनवरी 2026 को सरदार पटेल भवन, पटना में हुआ।" },
+            { q: "बिहार पुलिस की कौन सी नई इकाई का शुभारंभ सम्मेलन के दौरान किया गया?", options: ["STF", "साइबर अपराध एवं सुरक्षा इकाई", "महिला सेल", "पर्यटन पुलिस"], ans: 1, explanation: "इसका उद्देश्य तकनीक-आधारित अपराधों से निपटना है।" },
+            { q: "वर्तमान में पटना उच्च न्यायालय में न्यायाधीशों के कुल कितने पद रिक्त हैं?", options: ["10", "16", "20", "5"], ans: 1, explanation: "दो नए न्यायाधीशों की नियुक्ति के बाद अब 53 स्वीकृत पदों में से 16 रिक्त हैं।" },
+            { q: "बिहार ने किस वर्ष तक राज्य को पूरी तरह 'कालाजार-मुक्त' बनाने का लक्ष्य रखा है?", options: ["2025", "2026", "2027", "2030"], ans: 2, explanation: "2023 में ब्लॉक स्तर पर उन्मूलन के बाद अब 2027 तक पूर्ण मुक्ति का लक्ष्य है।" },
+            { q: "कालाजार किस परजीवी के कारण होता है?", options: ["प्लाज्मोडियम", "लीशमैनिया", "ट्रिपैनोसोमा", "एंटअमीबा"], ans: 1, explanation: "इसे विसरल लीशमैनियासिस (VL) भी कहा जाता है।" },
+            { q: "डॉ. वीरेंद्र कुमार भारद्वाज को किस पुस्तक के लिए 'राजनारायण चौधरी बाल साहित्य पुरस्कार' मिला?", options: ["जादू का पिटारा", "देखो मस्त मदारी आया", "बिहार की गाथा", "नन्हे कदम"], ans: 1, explanation: "यह 58 कविताओं का एक बाल कविता संग्रह है।" },
+            { q: "बिहार और पटना संग्रहालय को जोड़ने वाली भूमिगत सुरंग की लंबाई कितनी होगी?", options: ["1 किमी", "1.5 किमी", "2 किमी", "3 किमी"], ans: 1, explanation: "यह 1.5 किमी लंबी सुरंग विश्व स्तर की 'हेरिटेज टनल' होगी।" }
         ]
     }
 };
-// ======================================================
 
+// --- Navigation Logic ---
 function showStep(s, val) {
     document.querySelectorAll('.step').forEach(d => d.classList.remove('active'));
     document.getElementById('step' + s).classList.add('active');
@@ -52,15 +55,22 @@ function showStep(s, val) {
     if(s===3) currentMonth = val;
 }
 
+// --- Test Initiation ---
 function startMock(topic) {
     currentTopic = topic;
-    questions = myData[currentMonth][topic] || [];
-    if(questions.length === 0) { alert("Data nahi mila!"); return; }
+    questions = (myData[currentMonth] && myData[currentMonth][topic]) ? myData[currentMonth][topic] : [];
+    
+    if(questions.length === 0) {
+        alert("Is topic ya mahine ke liye questions abhi nahi dale gaye hain.");
+        return;
+    }
     
     currentIndex = 0;
     userAnswers = {};
     showStep(4);
     document.getElementById('test-title').innerText = `${currentMonth} - ${topic}`;
+    document.querySelector('.nav-controls').style.display = 'flex';
+    document.getElementById('palette-area').style.display = 'flex';
     
     let mins = parseInt(document.getElementById('setTimer').value);
     timeLeft = mins * 60;
@@ -68,6 +78,7 @@ function startMock(topic) {
     renderQuestion();
 }
 
+// --- Timer Function ---
 function startTimer() {
     clearInterval(timer);
     timer = setInterval(() => {
@@ -75,16 +86,22 @@ function startTimer() {
         let m = Math.floor(timeLeft / 60);
         let s = timeLeft % 60;
         document.getElementById('time-left').innerText = `${m}:${s < 10 ? '0' : ''}${s}`;
-        if(timeLeft <= 0) finishTest();
+        if(timeLeft <= 0) {
+            clearInterval(timer);
+            alert("Samay samapt ho gaya!");
+            finishTest();
+        }
     }, 1000);
 }
 
+// --- Render Question ---
 function renderQuestion() {
     const container = document.getElementById('quiz-container');
     const q = questions[currentIndex];
     container.innerHTML = `
         <div class="q-card">
-            <p><b>Q${currentIndex + 1}:</b> ${q.q}</p>
+            <p><b>Question ${currentIndex + 1} of ${questions.length}:</b></p>
+            <p>${q.q}</p>
             ${q.options.map((opt, i) => `
                 <button class="opt-btn ${userAnswers[currentIndex] === i ? 'selected-opt' : ''}" 
                 onclick="selectOption(${i})">${opt}</button>
@@ -94,7 +111,10 @@ function renderQuestion() {
     renderPalette();
 }
 
-function selectOption(i) { userAnswers[currentIndex] = i; renderQuestion(); }
+function selectOption(i) {
+    userAnswers[currentIndex] = i;
+    renderQuestion();
+}
 
 function changeQ(dir) {
     if(currentIndex + dir >= 0 && currentIndex + dir < questions.length) {
@@ -103,6 +123,30 @@ function changeQ(dir) {
     }
 }
 
+function skipQ() {
+    if(userAnswers[currentIndex] === undefined) userAnswers[currentIndex] = null;
+    changeQ(1);
+}
+
+function jumpTo(i) {
+    currentIndex = i;
+    renderQuestion();
+}
+
+// --- Palette Rendering ---
+function renderPalette() {
+    const pal = document.getElementById('palette-area');
+    pal.innerHTML = questions.map((_, i) => {
+        let statusClass = "";
+        if(i === currentIndex) statusClass = "pal-current";
+        else if(userAnswers[i] !== undefined && userAnswers[i] !== null) statusClass = "pal-answered";
+        else if(userAnswers[i] === null) statusClass = "pal-skipped";
+        
+        return `<div class="pal-item ${statusClass}" onclick="jumpTo(${i})">${i+1}</div>`;
+    }).join('');
+}
+
+// --- Result & Analysis ---
 function finishTest() {
     clearInterval(timer);
     const container = document.getElementById('quiz-container');
@@ -116,48 +160,46 @@ function finishTest() {
     });
 
     let finalScore = (correct * 1) - (wrong * neg);
-    let status = finalScore > (questions.length / 2) ? "Strong" : "Needs Improvement";
+    let status = finalScore >= (questions.length * 0.4) ? "Strong" : "Weak";
 
     container.innerHTML = `
-        <div style="text-align:center; padding:20px;">
-            <h2>Result Analysis</h2>
-            <h1 style="color:var(--primary)">${finalScore.toFixed(2)} / ${questions.length}</h1>
-            <p>✅ Correct: ${correct} | ❌ Wrong: ${wrong} | ⏩ Skipped: ${skipped}</p>
-            <div style="background:#e9ecef; padding:10px; border-radius:8px;">
-                <strong>Topic Status:</strong> ${status} (${currentTopic})
+        <div style="text-align:center; padding:10px;">
+            <h2 style="margin-bottom:5px;">Test Result</h2>
+            <h1 style="color:#007bff; font-size:40px; margin:10px 0;">${finalScore.toFixed(2)} / ${questions.length}</h1>
+            <div style="display:flex; justify-content:space-around; margin:15px 0; font-size:14px;">
+                <span style="color:green">✅ Correct: ${correct}</span>
+                <span style="color:red">❌ Wrong: ${wrong}</span>
+                <span style="color:orange">⏩ Skipped: ${skipped}</span>
             </div>
-            <button class="main-menu" style="background:var(--success); margin-top:15px;" onclick="viewSolutions()">View Solutions & Explanations</button>
-            <button class="main-menu" style="background:var(--primary); margin-top:10px;" onclick="startMock('${currentTopic}')">Re-attempt Test</button>
-            <button class="main-menu" style="background:var(--dark); margin-top:10px;" onclick="location.reload()">Back to Home</button>
+            <div style="background:#f1f3f5; padding:15px; border-radius:8px; border:1px solid #ddd;">
+                <strong>Topic Analysis (${currentTopic}):</strong><br>
+                <span style="color:${status === 'Strong' ? 'green' : 'red'}; font-size:18px;">${status}</span>
+            </div>
+            <button class="main-menu" style="background:#28a745; margin-top:20px;" onclick="viewSolutions()">View Solution & Explanations</button>
+            <button class="main-menu" style="background:#007bff; margin-top:10px;" onclick="startMock('${currentTopic}')">Re-attempt Test</button>
+            <button class="main-menu" style="background:#343a40; margin-top:10px;" onclick="location.reload()">Back to Home</button>
         </div>
     `;
     document.querySelector('.nav-controls').style.display = 'none';
     document.getElementById('palette-area').style.display = 'none';
 }
 
+// --- Solutions View ---
 function viewSolutions() {
     const container = document.getElementById('quiz-container');
-    container.innerHTML = `<h2>Solutions</h2>` + questions.map((q, i) => {
+    container.innerHTML = `<h2 style="text-align:center;">Detailed Solutions</h2>` + 
+    questions.map((q, i) => {
         let userSelection = userAnswers[i];
         let isCorrect = userSelection === q.ans;
         return `
-            <div class="q-card" style="border-left: 5px solid ${isCorrect ? 'green' : 'red'}">
+            <div class="q-card" style="border-left: 5px solid ${isCorrect ? '#28a745' : (userSelection === null || userSelection === undefined ? '#ffc107' : '#dc3545')}">
                 <p><b>Q${i+1}:</b> ${q.q}</p>
-                <p style="color:green"><b>Sahi Jawab:</b> ${q.options[q.ans]}</p>
-                <p style="color:${isCorrect ? 'green' : 'red'}"><b>Aapka Jawab:</b> ${userSelection !== undefined ? q.options[userSelection] : 'Nahi diya'}</p>
-                <div style="background:#f1f3f5; padding:10px; font-size:14px; border-radius:5px; margin-top:10px;">
+                <p style="color:#28a745; margin:5px 0;"><b>Correct Answer:</b> ${q.options[q.ans]}</p>
+                <p style="color:${isCorrect ? '#28a745' : '#dc3545'}; margin:5px 0;"><b>Your Answer:</b> ${userSelection !== undefined && userSelection !== null ? q.options[userSelection] : 'Not Answered'}</p>
+                <div style="background:#fff3cd; padding:12px; font-size:14px; border-radius:5px; margin-top:10px; border:1px solid #ffeeba;">
                     <b>Explanation:</b> ${q.explanation}
                 </div>
             </div>
         `;
-    }).join('');
+    }).join('') + `<button class="main-menu" onclick="location.reload()">Back to Home</button>`;
 }
-
-function renderPalette() {
-    const pal = document.getElementById('palette-area');
-    pal.innerHTML = questions.map((_, i) => `
-        <div class="pal-item ${i === currentIndex ? 'pal-current' : (userAnswers[i] !== undefined ? 'pal-answered' : '')}" 
-        onclick="jumpTo(${i})">${i+1}</div>
-    `).join('');
-}
-function jumpTo(i) { currentIndex = i; renderQuestion(); }
