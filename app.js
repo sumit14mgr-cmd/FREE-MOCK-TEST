@@ -6,29 +6,16 @@ let userAnswers = {};
 let timer, timeLeft;
 
 // ======================================================
-// 🎯 DATA CENTER: SARE QUESTIONS YAHAN HAIN
+// 🎯 DATA CENTER: ONLY JANUARY BIHAR SPECIAL
 // ======================================================
 const myData = {
     "Jan 2026": {
-        "National": [
-            { 
-                q: "विंग्स इंडिया 2026 के दौरान बिहार को किस श्रेणी में राष्ट्रीय पुरस्कार से सम्मानित किया गया?", 
-                options: ["क्षेत्रीय संपर्क योजना (RCS) - उड़ान", "कृषि विकास", "डिजिटल शिक्षा", "पर्यटन"], 
-                ans: 0, 
-                explanation: "बिहार को उत्तर प्रदेश के साथ संयुक्त रूप से 'सर्वाधिक सक्रिय राज्य' श्रेणी में यह पुरस्कार मिला।" 
-            },
-            { 
-                q: "बिहार के सामान्य प्रशासन विभाग को कौन सा ISO प्रमाणन प्राप्त हुआ है?", 
-                options: ["ISO 14001", "ISO 9001:2015", "ISO 27001", "ISO 45001"], 
-                ans: 1, 
-                explanation: "यह प्रमाणन कर्मचारी प्रबंधन और प्रशासनिक सुधारों के लिए दिया गया है।" 
-            }
-        ],
         "Bihar Special": [
+            { q: "विंग्स इंडिया 2026 के दौरान बिहार को किस श्रेणी में राष्ट्रीय पुरस्कार से सम्मानित किया गया?", options: ["क्षेत्रीय संपर्क योजना (RCS) - उड़ान", "कृषि विकास", "डिजिटल शिक्षा", "पर्यटन"], ans: 0, explanation: "बिहार को उत्तर प्रदेश के साथ संयुक्त रूप से 'सर्वाधिक सक्रिय राज्य' श्रेणी में यह पुरस्कार मिला।" },
             { q: "कैथी लिपि के ऐतिहासिक दस्तावेजों को देवनागरी में रूपांतरित करने के लिए कितने विशेषज्ञों का पैनल गठित किया गया है?", options: ["15", "29", "40", "50"], ans: 1, explanation: "राजस्व एवं भूमि सुधार विभाग ने 29 प्रशिक्षित अनुवादकों का पैनल बनाया है।" },
             { q: "1 जनवरी 2026 को बिहार बटालियन की कौन सी स्थापना वर्षगांठ मनाई गई?", options: ["8वीं की 50वीं", "12वीं की 40वीं", "8वीं की 60वीं और 12वीं की 49वीं", "दोनों की 50वीं"], ans: 2, explanation: "8वीं बिहार बटालियन की स्थापना 1965 और 12वीं की 1976 में हुई थी।" },
             { q: "पटना उच्च न्यायालय के 47वें मुख्य न्यायाधीश के रूप में किसने शपथ ली?", options: ["न्यायमूर्ति के. विनोद चंद्रन", "न्यायमूर्ति संगम कुमार साहू", "न्यायमूर्ति प्रवीण कुमार", "न्यायमूर्ति ऋतेश कुमार"], ans: 1, explanation: "न्यायमूर्ति संगम कुमार साहू ने 7 जनवरी 2026 को शपथ ली।" },
-            { q: "आईआईटी पटना में बन रहा आधुनिक अनुसंधान पार्क किस मॉडल पर आधारित है?", options: ["आईआईटी दिल्ली", "आईआईटी बॉम्बे", "आईआईटी मद्रास", "आईआईटी कानपुर"], ans: 2, explanation: "यह पार्क 15,000 वर्ग फुट में आईआईटी मद्रास के मॉडल पर विकसित किया जा रहा है।" },
+            { q: "आईआईटी पटना में बन रहा आधुनिक अनुसंधान पार्क किस मॉडल पर आधारित है?", options: ["आईआईटी दिल्ली", "आईआईटी बॉम्बे", "आईआईटी मद्राas", "आईआईटी कानपुर"], ans: 2, explanation: "यह पार्क 15,000 वर्ग फुट में आईआईटी मद्रास के मॉडल पर विकसित किया जा रहा है।" },
             { q: "13 जनवरी 2026 को हुई मंत्रिपरिषद की बैठक में कुल कितने प्रस्तावों को मंजूरी दी गई?", options: ["32", "43", "50", "25"], ans: 1, explanation: "मुख्यमंत्री नीतीश कुमार की अध्यक्षता में 43 प्रस्तावों को स्वीकृति मिली।" },
             { q: "सोन नदी जल-बंटवारे विवाद के तहत झारखंड को कितना जल आवंटित किया जाएगा?", options: ["7.75 मिलियन एकड़-फुट", "5.75 मिलियन एकड़-फुट", "2.00 मिलियन एकड़-फुट", "1.50 मिलियन एकड़-फुट"], ans: 2, explanation: "सहमति के अनुसार बिहार को 5.75 और झारखंड को 2.00 मिलियन एकड़-फुट जल मिलेगा।" },
             { q: "पटना में विद्युत आपूर्ति को सुधारने के लिए कितने करोड़ की भूमिगत केबलिंग परियोजना को मंजूरी दी गई?", options: ["500 करोड़", "653 करोड़", "800 करोड़", "1000 करोड़"], ans: 1, explanation: "यह परियोजना पटना के 13 प्रमंडलों में लागू की जाएगी।" },
@@ -42,8 +29,10 @@ const myData = {
             { q: "बिहार ने किस वर्ष तक राज्य को पूरी तरह 'कालाजार-मुक्त' बनाने का लक्ष्य रखा है?", options: ["2025", "2026", "2027", "2030"], ans: 2, explanation: "2023 में ब्लॉक स्तर पर उन्मूलन के बाद अब 2027 तक पूर्ण मुक्ति का लक्ष्य है।" },
             { q: "कालाजार किस परजीवी के कारण होता है?", options: ["प्लाज्मोडियम", "लीशमैनिया", "ट्रिपैनोसोमा", "एंटअमीबा"], ans: 1, explanation: "इसे विसरल लीशमैनियासिस (VL) भी कहा जाता है।" },
             { q: "डॉ. वीरेंद्र कुमार भारद्वाज को किस पुस्तक के लिए 'राजनारायण चौधरी बाल साहित्य पुरस्कार' मिला?", options: ["जादू का पिटारा", "देखो मस्त मदारी आया", "बिहार की गाथा", "नन्हे कदम"], ans: 1, explanation: "यह 58 कविताओं का एक बाल कविता संग्रह है।" },
-            { q: "बिहार और पटना संग्रहालय को जोड़ने वाली भूमिगत सुरंग की लंबाई कितनी होगी?", options: ["1 किमी", "1.5 किमी", "2 किमी", "3 किमी"], ans: 1, explanation: "यह 1.5 किमी लंबी सुरंग विश्व स्तर की 'हेरिटेज टनल' होगी।" }
-        ]
+            { q: "बिहार और पटना संग्रहालय को जोड़ने वाली भूमिगत सुरंग की लंबाई कितनी होगी?", options: ["1 किमी", "1.5 किमी", "2 किमी", "3 किमी"], ans: 1, explanation: "यह 1.5 किमी लंबी सुरंग विश्व स्तर की 'हेरिटेज टनल' होगी।" },
+            { q: "बिहार के सामान्य प्रशासन विभाग को कौन सा ISO प्रमाणन प्राप्त हुआ है?", options: ["ISO 14001", "ISO 9001:2015", "ISO 27001", "ISO 45001"], ans: 1, explanation: "यह प्रमाणन कर्मचारी प्रबंधन और प्रशासनिक सुधारों के लिए दिया गया है।" }
+        ],
+        "National": [] 
     }
 };
 
@@ -55,13 +44,13 @@ function showStep(s, val) {
     if(s===3) currentMonth = val;
 }
 
-// --- Test Initiation ---
+// --- Start Mock ---
 function startMock(topic) {
     currentTopic = topic;
     questions = (myData[currentMonth] && myData[currentMonth][topic]) ? myData[currentMonth][topic] : [];
     
     if(questions.length === 0) {
-        alert("Is topic ya mahine ke liye questions abhi nahi dale gaye hain.");
+        alert("Sawal nahi mile!");
         return;
     }
     
@@ -69,6 +58,8 @@ function startMock(topic) {
     userAnswers = {};
     showStep(4);
     document.getElementById('test-title').innerText = `${currentMonth} - ${topic}`;
+    
+    // Reset Navigation & Palette visibility
     document.querySelector('.nav-controls').style.display = 'flex';
     document.getElementById('palette-area').style.display = 'flex';
     
@@ -78,7 +69,6 @@ function startMock(topic) {
     renderQuestion();
 }
 
-// --- Timer Function ---
 function startTimer() {
     clearInterval(timer);
     timer = setInterval(() => {
@@ -86,21 +76,16 @@ function startTimer() {
         let m = Math.floor(timeLeft / 60);
         let s = timeLeft % 60;
         document.getElementById('time-left').innerText = `${m}:${s < 10 ? '0' : ''}${s}`;
-        if(timeLeft <= 0) {
-            clearInterval(timer);
-            alert("Samay samapt ho gaya!");
-            finishTest();
-        }
+        if(timeLeft <= 0) { finishTest(); alert("Time Up!"); }
     }, 1000);
 }
 
-// --- Render Question ---
 function renderQuestion() {
     const container = document.getElementById('quiz-container');
     const q = questions[currentIndex];
     container.innerHTML = `
         <div class="q-card">
-            <p><b>Question ${currentIndex + 1} of ${questions.length}:</b></p>
+            <p><b>Q${currentIndex + 1} of ${questions.length}:</b></p>
             <p>${q.q}</p>
             ${q.options.map((opt, i) => `
                 <button class="opt-btn ${userAnswers[currentIndex] === i ? 'selected-opt' : ''}" 
@@ -116,6 +101,7 @@ function selectOption(i) {
     renderQuestion();
 }
 
+// FIXED: Next/Prev Function
 function changeQ(dir) {
     if(currentIndex + dir >= 0 && currentIndex + dir < questions.length) {
         currentIndex += dir;
@@ -133,20 +119,17 @@ function jumpTo(i) {
     renderQuestion();
 }
 
-// --- Palette Rendering ---
 function renderPalette() {
     const pal = document.getElementById('palette-area');
     pal.innerHTML = questions.map((_, i) => {
-        let statusClass = "";
-        if(i === currentIndex) statusClass = "pal-current";
-        else if(userAnswers[i] !== undefined && userAnswers[i] !== null) statusClass = "pal-answered";
-        else if(userAnswers[i] === null) statusClass = "pal-skipped";
-        
-        return `<div class="pal-item ${statusClass}" onclick="jumpTo(${i})">${i+1}</div>`;
+        let cls = "";
+        if(i === currentIndex) cls = "pal-current";
+        else if(userAnswers[i] !== undefined && userAnswers[i] !== null) cls = "pal-answered";
+        else if(userAnswers[i] === null) cls = "pal-skipped";
+        return `<div class="pal-item ${cls}" onclick="jumpTo(${i})">${i+1}</div>`;
     }).join('');
 }
 
-// --- Result & Analysis ---
 function finishTest() {
     clearInterval(timer);
     const container = document.getElementById('quiz-container');
@@ -159,47 +142,30 @@ function finishTest() {
         else wrong++;
     });
 
-    let finalScore = (correct * 1) - (wrong * neg);
-    let status = finalScore >= (questions.length * 0.4) ? "Strong" : "Weak";
-
+    let score = (correct * 1) - (wrong * neg);
     container.innerHTML = `
-        <div style="text-align:center; padding:10px;">
-            <h2 style="margin-bottom:5px;">Test Result</h2>
-            <h1 style="color:#007bff; font-size:40px; margin:10px 0;">${finalScore.toFixed(2)} / ${questions.length}</h1>
-            <div style="display:flex; justify-content:space-around; margin:15px 0; font-size:14px;">
-                <span style="color:green">✅ Correct: ${correct}</span>
-                <span style="color:red">❌ Wrong: ${wrong}</span>
-                <span style="color:orange">⏩ Skipped: ${skipped}</span>
-            </div>
-            <div style="background:#f1f3f5; padding:15px; border-radius:8px; border:1px solid #ddd;">
-                <strong>Topic Analysis (${currentTopic}):</strong><br>
-                <span style="color:${status === 'Strong' ? 'green' : 'red'}; font-size:18px;">${status}</span>
-            </div>
-            <button class="main-menu" style="background:#28a745; margin-top:20px;" onclick="viewSolutions()">View Solution & Explanations</button>
-            <button class="main-menu" style="background:#007bff; margin-top:10px;" onclick="startMock('${currentTopic}')">Re-attempt Test</button>
-            <button class="main-menu" style="background:#343a40; margin-top:10px;" onclick="location.reload()">Back to Home</button>
+        <div style="text-align:center;">
+            <h2>Result</h2>
+            <h1>${score.toFixed(2)} / ${questions.length}</h1>
+            <p>✅ ${correct} | ❌ ${wrong} | ⏩ ${skipped}</p>
+            <button class="main-menu" style="background:#28a745" onclick="viewSolutions()">Solutions & Explanations</button>
+            <button class="main-menu" onclick="startMock('${currentTopic}')">Re-attempt</button>
+            <button class="main-menu" style="background:#333" onclick="location.reload()">Home</button>
         </div>
     `;
     document.querySelector('.nav-controls').style.display = 'none';
     document.getElementById('palette-area').style.display = 'none';
 }
 
-// --- Solutions View ---
 function viewSolutions() {
     const container = document.getElementById('quiz-container');
-    container.innerHTML = `<h2 style="text-align:center;">Detailed Solutions</h2>` + 
-    questions.map((q, i) => {
-        let userSelection = userAnswers[i];
-        let isCorrect = userSelection === q.ans;
-        return `
-            <div class="q-card" style="border-left: 5px solid ${isCorrect ? '#28a745' : (userSelection === null || userSelection === undefined ? '#ffc107' : '#dc3545')}">
-                <p><b>Q${i+1}:</b> ${q.q}</p>
-                <p style="color:#28a745; margin:5px 0;"><b>Correct Answer:</b> ${q.options[q.ans]}</p>
-                <p style="color:${isCorrect ? '#28a745' : '#dc3545'}; margin:5px 0;"><b>Your Answer:</b> ${userSelection !== undefined && userSelection !== null ? q.options[userSelection] : 'Not Answered'}</p>
-                <div style="background:#fff3cd; padding:12px; font-size:14px; border-radius:5px; margin-top:10px; border:1px solid #ffeeba;">
-                    <b>Explanation:</b> ${q.explanation}
-                </div>
+    container.innerHTML = `<h2>Solutions</h2>` + questions.map((q, i) => `
+        <div class="q-card" style="border-left:5px solid ${userAnswers[i] === q.ans ? 'green' : 'red'}">
+            <p><b>Q${i+1}:</b> ${q.q}</p>
+            <p style="color:green">Correct: ${q.options[q.ans]}</p>
+            <div style="background:#fff3cd; padding:10px; border-radius:5px; font-size:14px; margin-top:5px;">
+                <b>Explanation:</b> ${q.explanation}
             </div>
-        `;
-    }).join('') + `<button class="main-menu" onclick="location.reload()">Back to Home</button>`;
+        </div>
+    `).join('') + `<button class="main-menu" onclick="location.reload()">Back</button>`;
 }
