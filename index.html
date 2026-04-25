@@ -3,53 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FREE MOCK TEST</title>
+    <title>FREE MOCK TEST - BPSC SPECIAL</title>
     <style>
-        :root { --primary: #1a237e; --accent: #0288d1; --bg: #f4f7f6; --success: #2e7d32; }
-        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; padding: 0; }
-        header { background: linear-gradient(135deg, var(--primary), var(--accent)); color: white; padding: 20px; text-align: center; }
-        .container { max-width: 600px; margin: 20px auto; padding: 15px; }
+        :root { --primary: #1a237e; --accent: #0288d1; --bg: #f4f7f6; --success: #2e7d32; --text: #333; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg); margin: 0; color: var(--text); }
+        header { background: linear-gradient(135deg, var(--primary), var(--accent)); color: white; padding: 20px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+        .container { max-width: 700px; margin: 20px auto; padding: 15px; }
         
-        /* Navigation Views */
         .view { display: none; animation: fadeIn 0.3s ease; }
         .view.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         
-        .section-title { text-align: center; color: var(--primary); margin-bottom: 20px; }
+        .section-title { text-align: center; color: var(--primary); margin-bottom: 20px; border-bottom: 2px solid var(--accent); display: inline-block; width: 100%; padding-bottom: 10px; }
+        
+        /* Grid Layouts */
         .category-grid, .month-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .card, .month-btn { background: white; border: none; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); cursor: pointer; font-weight: bold; }
-        .set-btn { width: 100%; padding: 18px; margin-bottom: 12px; border: none; background: #e3f2fd; color: #0d47a1; border-left: 6px solid #0d47a1; border-radius: 8px; font-weight: bold; cursor: pointer; text-align: left; }
+        .card, .month-btn { background: white; border: none; padding: 25px; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); cursor: pointer; font-weight: bold; transition: 0.3s; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 8px 15px rgba(0,0,0,0.1); }
         
-        /* Settings & Quiz UI */
-        .settings-card, .quiz-card, .score-card { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); margin-bottom: 20px; }
-        .input-group { margin-bottom: 15px; }
-        .input-group label { display: block; margin-bottom: 5px; font-weight: bold; }
-        .input-group input, .input-group select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
-        
-        .option { padding: 15px; border: 2px solid #eee; border-radius: 10px; margin-top: 10px; cursor: pointer; }
-        .option.selected { background: #bbdefb; border-color: #1976d2; font-weight: bold; }
-        
-        .timer-box { font-size: 20px; font-weight: bold; color: #d32f2f; text-align: center; margin-bottom: 10px; }
-        .nav-controls { display: flex; justify-content: space-between; margin-top: 20px; }
-        
-        /* Buttons */
-        .btn-block { width: 100%; padding: 15px; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold; color: white; margin-top: 10px; }
-        .btn-start { background: var(--success); }
-        .btn-submit { background: #000; }
-        .back-btn { background: #666; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; margin-bottom: 10px; }
+        .set-btn { width: 100%; padding: 20px; margin-bottom: 15px; border: none; background: white; color: var(--primary); border-left: 8px solid var(--primary); border-radius: 10px; font-weight: bold; cursor: pointer; text-align: left; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
 
+        /* Settings Card */
+        .settings-card { background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .input-group { margin-bottom: 20px; }
+        .input-group label { display: block; margin-bottom: 8px; font-weight: bold; color: var(--primary); }
+        .input-group input { width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px; outline: none; }
+        .input-group input:focus { border-color: var(--accent); }
+
+        /* Quiz UI */
+        .timer-bar { background: white; padding: 10px; border-radius: 10px; text-align: center; font-size: 20px; font-weight: bold; color: #d32f2f; margin-bottom: 15px; position: sticky; top: 10px; z-index: 100; border: 2px solid #d32f2f; }
+        .quiz-card { background: white; padding: 25px; border-radius: 20px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); }
+        .lang-label { font-size: 12px; color: var(--accent); text-transform: uppercase; font-weight: bold; margin-bottom: 5px; display: block; }
+        .q-text { font-size: 18px; font-weight: bold; margin-bottom: 15px; line-height: 1.5; }
+        .option { padding: 15px; border: 2px solid #eee; border-radius: 12px; margin-top: 12px; cursor: pointer; transition: 0.2s; position: relative; }
+        .option.selected { background: #e3f2fd; border-color: var(--accent); }
+        
         /* Analysis & Solutions */
-        .score-item { padding: 10px; background: #f8f9fa; border-radius: 8px; text-align: center; font-weight: bold; }
-        .highlight { background: #fff9c4; grid-column: span 2; font-size: 1.2rem; }
-        .analysis-box { background: #ffebee; padding: 15px; border-radius: 10px; border-left: 5px solid #d32f2f; margin-top: 20px; }
-        .sol-card { background: white; padding: 15px; border-radius: 10px; margin-bottom: 15px; border-left: 5px solid var(--accent); box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .exp-box { background: #f1f8e9; padding: 10px; margin-top: 10px; font-size: 14px; border-radius: 5px; color: #33691e; }
+        .score-card { background: white; padding: 20px; border-radius: 15px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .score-item { padding: 15px; background: #f8f9fa; border-radius: 10px; text-align: center; }
+        .analysis-box { margin-top: 20px; padding: 15px; background: #fff3e0; border-radius: 12px; border-left: 6px solid #ff9800; }
+        
+        .sol-card { background: white; padding: 20px; border-radius: 15px; margin-bottom: 20px; border-top: 5px solid var(--accent); box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .example-box { background: #e1f5fe; padding: 12px; border-radius: 8px; margin: 10px 0; font-size: 14px; color: #0277bd; border-left: 4px solid #0277bd; }
+        .exp-box { background: #f1f8e9; padding: 15px; border-radius: 8px; color: #33691e; font-size: 15px; line-height: 1.6; }
+
+        .btn-block { width: 100%; padding: 18px; border: none; border-radius: 10px; cursor: pointer; font-size: 16px; font-weight: bold; color: white; margin-top: 15px; }
+        .btn-main { background: var(--success); }
+        .back-btn { background: #eee; color: #333; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; margin-bottom: 15px; }
     </style>
 </head>
 <body>
 
     <header>
-        <h1 onclick="window.location.reload()" style="cursor:pointer">FREE MOCK TEST</h1>
+        <h1 onclick="location.reload()" style="cursor:pointer">FREE MOCK TEST</h1>
     </header>
 
     <div class="container">
@@ -75,59 +81,54 @@
 
         <div id="settings-view" class="view">
             <button class="back-btn" onclick="showView('set-view')">← Back</button>
-            <h2 class="section-title">Set Test Rules</h2>
+            <h2 class="section-title">Test Configuration</h2>
             <div class="settings-card">
                 <div class="input-group">
-                    <label>Negative Marking (per wrong answer):</label>
-                    <input type="number" id="negMarkInput" value="0.25" step="0.05">
+                    <label>Negative Marking (e.g., 0.25):</label>
+                    <input type="number" id="negMarkInput" value="0.25" step="0.01">
                 </div>
                 <div class="input-group">
-                    <label>Time Duration (Minutes):</label>
-                    <select id="timeLimitInput">
-                        <option value="5">5 Minutes</option>
-                        <option value="10" selected>10 Minutes</option>
-                        <option value="20">20 Minutes</option>
-                        <option value="60">1 Hour</option>
-                    </select>
+                    <label>Set Time (Minutes - Type or select):</label>
+                    <input type="number" id="timeLimitInput" value="10" min="1">
                 </div>
-                <button class="btn-block btn-start" onclick="startQuizNow()">START TEST</button>
+                <button class="btn-block btn-main" onclick="startQuizNow()">START BILINGUAL TEST</button>
             </div>
         </div>
 
         <div id="quiz-view" class="view">
-            <div class="timer-box" id="timer-display">Time: 10:00</div>
-            <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
-                <span id="q-count" style="font-weight:bold">Question 1</span>
-            </div>
+            <div class="timer-bar" id="timer-display">Remaining Time: 10:00</div>
             <div class="quiz-card">
-                <div id="question-text" style="font-weight:bold; font-size:18px;"></div>
+                <span id="q-count" style="color:var(--accent); font-weight:bold;"></span>
+                <hr>
+                <div id="question-area">
+                    </div>
                 <div id="options-list"></div>
-                <div class="nav-controls">
-                    <button onclick="changeQuestion(-1)">Previous</button>
-                    <button onclick="changeQuestion(1)">Next / Skip</button>
+                <div style="display:flex; justify-content:space-between; margin-top:25px;">
+                    <button class="back-btn" onclick="changeQuestion(-1)">← Previous</button>
+                    <button class="back-btn" onclick="changeQuestion(1)">Next / Skip →</button>
                 </div>
-                <button id="finalSubmitBtn" class="btn-block btn-submit" style="display:none; margin-top:20px;" onclick="finishQuiz()">Submit Quiz</button>
+                <button id="finalSubmitBtn" class="btn-block" style="display:none; background:#000;" onclick="finishQuiz()">Final Submit</button>
             </div>
         </div>
 
         <div id="result-view" class="view">
-            <h2 class="section-title">Performance Report</h2>
-            <div class="score-card" style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
-                <div class="score-item">Total Qs: <span id="res-total"></span></div>
+            <h2 class="section-title">Performance Dashboard</h2>
+            <div class="score-card">
+                <div class="score-item">Total: <span id="res-total"></span></div>
                 <div class="score-item">Correct: <span id="res-correct" style="color:green"></span></div>
                 <div class="score-item">Wrong: <span id="res-wrong" style="color:red"></span></div>
-                <div class="score-item highlight">Final Score: <span id="res-score"></span></div>
+                <div class="score-item" style="grid-column: span 2; background:#fff9c4; font-size:1.4rem;">Score: <span id="res-score"></span></div>
             </div>
             
             <div id="analysis-box" class="analysis-box"></div>
 
-            <button class="btn-block" style="background:var(--accent)" onclick="showSolutions()">View Detailed Solutions</button>
-            <button class="btn-block" style="background:#666" onclick="location.reload()">Re-attempt / Home</button>
+            <button class="btn-block" style="background:var(--accent)" onclick="showSolutions()">VIEW DETAILED SOLUTIONS</button>
+            <button class="btn-block" style="background:#666" onclick="location.reload()">TRY ANOTHER SET</button>
         </div>
 
         <div id="solution-view" class="view">
-            <button class="back-btn" onclick="showView('result-view')">← Back to Score</button>
-            <h2 class="section-title">Answers & Logic</h2>
+            <button class="back-btn" onclick="showView('result-view')">← Back to Dashboard</button>
+            <h2 class="section-title">Explanations & Context</h2>
             <div id="solution-list"></div>
         </div>
     </div>
@@ -136,15 +137,33 @@
         const database = {
             "January 2026": {
                 "Bihar Special": [
-                    { q: "Bihar ka pehla floating solar plant kaha hai?", a: ["Patna", "Darbhanga", "Supaul", "Gaya"], c: 1, exp: "Darbhanga ke Kadirabad mein bana hai.", sec: "Bihar Energy" },
-                    { q: "Bihar startup policy kab aayi?", a: ["2022", "2023", "2024", "2026"], c: 0, exp: "2022 mein launch hui thi.", sec: "Governance" },
-                    { q: "BPSC ke naye chairman?", a: ["Person A", "Person B", "Person C", "Person D"], c: 2, exp: "Data updated as per 2026.", sec: "Appointments" }
+                    { 
+                        qh: "बिहार का पहला तैरता हुआ सौर ऊर्जा संयंत्र कहाँ स्थापित किया गया है?", 
+                        qe: "Where is Bihar's first floating solar power plant established?", 
+                        ah: ["पटना", "दरभंगा", "सहरसा", "गया"], 
+                        ae: ["Patna", "Darbhanga", "Saharsa", "Gaya"], 
+                        c: 1, 
+                        exh: "दरभंगा के कादिराबाद में 2 मेगावाट की क्षमता वाला प्लांट बना है।",
+                        exe: "A 2 MW capacity plant has been built in Kadirabad, Darbhanga.",
+                        eg: "Example: Floating solar reduces water evaporation while generating clean energy.",
+                        sec: "Bihar Energy" 
+                    },
+                    { 
+                        qh: "बिहार स्टार्टअप नीति किस वर्ष शुरू की गई थी?", 
+                        qe: "In which year was the Bihar Startup Policy launched?", 
+                        ah: ["2022", "2023", "2020", "2019"], 
+                        ae: ["2022", "2023", "2020", "2019"], 
+                        c: 0, 
+                        exh: "युवा उद्यमियों को प्रोत्साहित करने के लिए 2022 में नई नीति आई।",
+                        exe: "The new policy came in 2022 to encourage young entrepreneurs.",
+                        eg: "Example: Startups like 'DeHaat' have flourished under state support.",
+                        sec: "Governance" 
+                    }
                 ]
             }
         };
 
-        let activeMonth = "", currentQs = [], qIndex = 0, userAns = {}, timer;
-        let timeLeft = 0, currentSetName = "";
+        let currentQs = [], qIndex = 0, userAns = {}, timer, timeLeft = 0, activeMonth = "", activeSetName = "";
 
         function showView(id) {
             document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
@@ -154,38 +173,36 @@
 
         function showMonthlyView() {
             showView('monthly-view');
-            const list = document.getElementById('month-list');
-            list.innerHTML = Object.keys(database).map(m => `<button class="month-btn" onclick="showSetView('${m}')">${m}</button>`).join('');
+            document.getElementById('month-list').innerHTML = Object.keys(database).map(m => `<button class="month-btn" onclick="showSetView('${m}')">${m}</button>`).join('');
         }
 
         function showSetView(month) {
             activeMonth = month;
             showView('set-view');
             document.getElementById('month-title').innerText = month;
-            const list = document.getElementById('set-list');
-            list.innerHTML = Object.keys(database[month]).map(s => `<button class="set-btn" onclick="prepareSettings('${s}')">${s}</button>`).join('');
+            document.getElementById('set-list').innerHTML = Object.keys(database[month]).map(s => `<button class="set-btn" onclick="prepareSettings('${s}')">${s}</button>`).join('');
         }
 
         function prepareSettings(setName) {
-            currentSetName = setName;
+            activeSetName = setName;
             showView('settings-view');
         }
 
         function startQuizNow() {
-            currentQs = database[activeMonth][currentSetName];
+            currentQs = database[activeMonth][activeSetName];
             qIndex = 0; userAns = {};
             timeLeft = parseInt(document.getElementById('timeLimitInput').value) * 60;
             showView('quiz-view');
             loadQuestion();
-            startTimer();
+            startTimerLogic();
         }
 
-        function startTimer() {
+        function startTimerLogic() {
             clearInterval(timer);
             timer = setInterval(() => {
-                let mins = Math.floor(timeLeft / 60);
-                let secs = timeLeft % 60;
-                document.getElementById('timer-display').innerText = `Time: ${mins}:${secs < 10 ? '0' : ''}${secs}`;
+                let m = Math.floor(timeLeft / 60);
+                let s = timeLeft % 60;
+                document.getElementById('timer-display').innerText = `Remaining Time: ${m}:${s < 10 ? '0' : ''}${s}`;
                 if (timeLeft <= 0) { clearInterval(timer); finishQuiz(); }
                 timeLeft--;
             }, 1000);
@@ -193,12 +210,23 @@
 
         function loadQuestion() {
             const q = currentQs[qIndex];
-            document.getElementById('q-count').innerText = `Question ${qIndex + 1}/${currentQs.length}`;
-            document.getElementById('question-text').innerText = q.q;
+            document.getElementById('q-count').innerText = `QUESTION ${qIndex + 1} OF ${currentQs.length}`;
+            
+            // Bilingual Question
+            document.getElementById('question-area').innerHTML = `
+                <div class="q-text"><span class="lang-label">Hindi</span>${q.qh}</div>
+                <div class="q-text" style="color:#555"><span class="lang-label">English</span>${q.qe}</div>
+            `;
+
+            // Bilingual Options
             const list = document.getElementById('options-list');
-            list.innerHTML = q.a.map((opt, i) => `
-                <div class="option ${userAns[qIndex] === i ? 'selected' : ''}" onclick="saveAns(${i})">${opt}</div>
+            list.innerHTML = q.ah.map((opt, i) => `
+                <div class="option ${userAns[qIndex] === i ? 'selected' : ''}" onclick="saveAns(${i})">
+                    <div style="font-weight:bold">${opt}</div>
+                    <div style="font-size:14px; color:#666">${q.ae[i]}</div>
+                </div>
             `).join('');
+
             document.getElementById('finalSubmitBtn').style.display = (qIndex === currentQs.length - 1) ? 'block' : 'none';
         }
 
@@ -215,9 +243,8 @@
             let weakAreas = {};
 
             currentQs.forEach((q, i) => {
-                if(userAns[i] === q.c) {
-                    correct++;
-                } else if(userAns[i] !== undefined) {
+                if(userAns[i] === q.c) correct++;
+                else if(userAns[i] !== undefined) {
                     wrong++;
                     weakAreas[q.sec] = (weakAreas[q.sec] || 0) + 1;
                 }
@@ -228,27 +255,27 @@
             document.getElementById('res-wrong').innerText = wrong;
             document.getElementById('res-score').innerText = (correct - (wrong * neg)).toFixed(2);
 
-            // Weak Section Analysis
-            let aBox = document.getElementById('analysis-box');
-            let weakHtml = "<h3>Weak Section Analysis:</h3>";
+            let analysisHtml = "<h3>Weak Area Analysis:</h3>";
             if(Object.keys(weakAreas).length > 0) {
-                for(let sec in weakAreas) {
-                    weakHtml += `<p>❌ <b>${sec}:</b> You missed ${weakAreas[sec]} questions.</p>`;
-                }
+                for(let s in weakAreas) analysisHtml += `<p>🚩 <b>${s}:</b> Needs improvement (${weakAreas[s]} wrong)</p>`;
             } else {
-                weakHtml += "<p>✅ All sections are strong! Keep it up.</p>";
+                analysisHtml += "<p>🌟 Excellent! All sections are balanced.</p>";
             }
-            aBox.innerHTML = weakHtml;
+            document.getElementById('analysis-box').innerHTML = analysisHtml;
         }
 
         function showSolutions() {
             showView('solution-view');
             const list = document.getElementById('solution-list');
             list.innerHTML = currentQs.map((q, i) => `
-                <div class="sol-card" style="border-left-color: ${userAns[i] === q.c ? 'green' : 'red'}">
-                    <p><b>Q${i+1}: ${q.q}</b></p>
-                    <p style="color:green">Correct: ${q.a[q.c]}</p>
-                    <div class="exp-box"><b>Logic:</b> ${q.exp}</div>
+                <div class="sol-card" style="border-left: 8px solid ${userAns[i] === q.c ? 'green' : '#d32f2f'}">
+                    <p><b>Q${i+1}: ${q.qh} / ${q.qe}</b></p>
+                    <p style="color:green; font-weight:bold">Ans: ${q.ah[q.c]} (${q.ae[q.c]})</p>
+                    <div class="example-box">${q.eg}</div>
+                    <div class="exp-box">
+                        <b>Explanation (Hindi):</b> ${q.exh}<br><br>
+                        <b>Explanation (English):</b> ${q.exe}
+                    </div>
                 </div>
             `).join('');
         }
