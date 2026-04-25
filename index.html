@@ -5,44 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FREE MOCK TEST</title>
     <style>
-        /* CSS: Saara Design Yahan Hai */
-        :root { --primary: #1a237e; --accent: #0288d1; --bg: #f4f7f6; }
+        :root { --primary: #1a237e; --accent: #0288d1; --bg: #f4f7f6; --success: #2e7d32; }
         body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; padding: 0; }
         header { background: linear-gradient(135deg, var(--primary), var(--accent)); color: white; padding: 20px; text-align: center; }
-        .ad-banner { background: rgba(255,255,255,0.1); border: 1px dashed white; max-width: 728px; height: 90px; margin: 10px auto; display: flex; align-items: center; justify-content: center; }
         .container { max-width: 600px; margin: 20px auto; padding: 15px; }
         
-        /* Sabse Important: Jo screen active nahi hai wo chupi rahegi */
+        /* Navigation Views */
         .view { display: none; animation: fadeIn 0.3s ease; }
         .view.active { display: block; }
-        
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         
         .section-title { text-align: center; color: var(--primary); margin-bottom: 20px; }
         .category-grid, .month-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
         .card, .month-btn { background: white; border: none; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); cursor: pointer; font-weight: bold; }
-        .set-btn { width: 100%; padding: 18px; margin-bottom: 12px; border: none; background: #e3f2fd; color: #0d47a1; border-left: 6px solid #0d47a1; border-radius: 8px; font-weight: bold; cursor: pointer; text-align: left; font-size: 16px; }
+        .set-btn { width: 100%; padding: 18px; margin-bottom: 12px; border: none; background: #e3f2fd; color: #0d47a1; border-left: 6px solid #0d47a1; border-radius: 8px; font-weight: bold; cursor: pointer; text-align: left; }
         
-        .quiz-card { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        /* Settings & Quiz UI */
+        .settings-card, .quiz-card, .score-card { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); margin-bottom: 20px; }
+        .input-group { margin-bottom: 15px; }
+        .input-group label { display: block; margin-bottom: 5px; font-weight: bold; }
+        .input-group input, .input-group select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
+        
         .option { padding: 15px; border: 2px solid #eee; border-radius: 10px; margin-top: 10px; cursor: pointer; }
         .option.selected { background: #bbdefb; border-color: #1976d2; font-weight: bold; }
         
-        .score-card { background: white; padding: 20px; border-radius: 12px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; text-align: center; }
-        .highlight { grid-column: span 2; background: #fff9c4; font-size: 1.2rem; padding: 15px; border-radius: 10px; }
-        .analysis-box { margin-top: 20px; padding: 15px; background: #fff3e0; border-radius: 10px; border: 1px solid #ffe0b2; }
-        .sol-card { background: white; padding: 15px; border-radius: 10px; margin-bottom: 15px; border-left: 5px solid var(--accent); }
-        .exp-box { background: #f1f8e9; padding: 10px; margin-top: 10px; font-size: 14px; border-radius: 5px; color: #33691e; }
-        
+        .timer-box { font-size: 20px; font-weight: bold; color: #d32f2f; text-align: center; margin-bottom: 10px; }
         .nav-controls { display: flex; justify-content: space-between; margin-top: 20px; }
-        .submit-btn { width: 100%; margin-top: 15px; background: #2e7d32; color: white; padding: 15px; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold; display: none; }
+        
+        /* Buttons */
+        .btn-block { width: 100%; padding: 15px; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold; color: white; margin-top: 10px; }
+        .btn-start { background: var(--success); }
+        .btn-submit { background: #000; }
         .back-btn { background: #666; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; margin-bottom: 10px; }
+
+        /* Analysis & Solutions */
+        .score-item { padding: 10px; background: #f8f9fa; border-radius: 8px; text-align: center; font-weight: bold; }
+        .highlight { background: #fff9c4; grid-column: span 2; font-size: 1.2rem; }
+        .analysis-box { background: #ffebee; padding: 15px; border-radius: 10px; border-left: 5px solid #d32f2f; margin-top: 20px; }
+        .sol-card { background: white; padding: 15px; border-radius: 10px; margin-bottom: 15px; border-left: 5px solid var(--accent); box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .exp-box { background: #f1f8e9; padding: 10px; margin-top: 10px; font-size: 14px; border-radius: 5px; color: #33691e; }
     </style>
 </head>
 <body>
 
     <header>
-        <h1 onclick="showView('category-view')" style="cursor:pointer">FREE MOCK TEST</h1>
-        <div class="ad-banner">Adsense Banner Area</div>
+        <h1 onclick="window.location.reload()" style="cursor:pointer">FREE MOCK TEST</h1>
     </header>
 
     <div class="container">
@@ -66,10 +73,31 @@
             <div id="set-list"></div>
         </div>
 
+        <div id="settings-view" class="view">
+            <button class="back-btn" onclick="showView('set-view')">← Back</button>
+            <h2 class="section-title">Set Test Rules</h2>
+            <div class="settings-card">
+                <div class="input-group">
+                    <label>Negative Marking (per wrong answer):</label>
+                    <input type="number" id="negMarkInput" value="0.25" step="0.05">
+                </div>
+                <div class="input-group">
+                    <label>Time Duration (Minutes):</label>
+                    <select id="timeLimitInput">
+                        <option value="5">5 Minutes</option>
+                        <option value="10" selected>10 Minutes</option>
+                        <option value="20">20 Minutes</option>
+                        <option value="60">1 Hour</option>
+                    </select>
+                </div>
+                <button class="btn-block btn-start" onclick="startQuizNow()">START TEST</button>
+            </div>
+        </div>
+
         <div id="quiz-view" class="view">
+            <div class="timer-box" id="timer-display">Time: 10:00</div>
             <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
-                <span id="q-count">Question 1</span>
-                <span>Neg: <input type="number" id="negMark" value="0.25" style="width:50px"></span>
+                <span id="q-count" style="font-weight:bold">Question 1</span>
             </div>
             <div class="quiz-card">
                 <div id="question-text" style="font-weight:bold; font-size:18px;"></div>
@@ -78,41 +106,45 @@
                     <button onclick="changeQuestion(-1)">Previous</button>
                     <button onclick="changeQuestion(1)">Next / Skip</button>
                 </div>
-                <button id="finalSubmit" class="submit-btn" onclick="showResult()">Submit Quiz</button>
+                <button id="finalSubmitBtn" class="btn-block btn-submit" style="display:none; margin-top:20px;" onclick="finishQuiz()">Submit Quiz</button>
             </div>
         </div>
 
         <div id="result-view" class="view">
-            <h2 class="section-title">Performance</h2>
-            <div class="score-card">
-                <div class="score-item">Total: <span id="res-total"></span></div>
-                <div class="score-item">Correct: <span id="res-correct"></span></div>
-                <div class="score-item">Wrong: <span id="res-wrong"></span></div>
-                <div class="score-item highlight">Score: <span id="res-score"></span></div>
+            <h2 class="section-title">Performance Report</h2>
+            <div class="score-card" style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+                <div class="score-item">Total Qs: <span id="res-total"></span></div>
+                <div class="score-item">Correct: <span id="res-correct" style="color:green"></span></div>
+                <div class="score-item">Wrong: <span id="res-wrong" style="color:red"></span></div>
+                <div class="score-item highlight">Final Score: <span id="res-score"></span></div>
             </div>
+            
             <div id="analysis-box" class="analysis-box"></div>
-            <button class="submit-btn" style="display:block; background:var(--accent)" onclick="showSolutions()">View Solutions</button>
-            <button class="submit-btn" style="display:block; background:#666; margin-top:10px;" onclick="location.reload()">Home / Re-attempt</button>
+
+            <button class="btn-block" style="background:var(--accent)" onclick="showSolutions()">View Detailed Solutions</button>
+            <button class="btn-block" style="background:#666" onclick="location.reload()">Re-attempt / Home</button>
         </div>
 
         <div id="solution-view" class="view">
             <button class="back-btn" onclick="showView('result-view')">← Back to Score</button>
+            <h2 class="section-title">Answers & Logic</h2>
             <div id="solution-list"></div>
         </div>
     </div>
 
     <script>
-        // DATABASE: Yahan data bharein
         const database = {
             "January 2026": {
                 "Bihar Special": [
-                    { q: "Bihar ka pehla floating solar power plant kaha hai?", a: ["Patna", "Darbhanga", "Supaul", "Gaya"], c: 1, exp: "Darbhanga ke Kadirabad mein bana hai.", sec: "Bihar News" },
-                    { q: "Bihar startup policy kab aayi?", a: ["2022", "2023", "2024", "2026"], c: 0, exp: "2022 mein launch hui thi.", sec: "Policy" }
+                    { q: "Bihar ka pehla floating solar plant kaha hai?", a: ["Patna", "Darbhanga", "Supaul", "Gaya"], c: 1, exp: "Darbhanga ke Kadirabad mein bana hai.", sec: "Bihar Energy" },
+                    { q: "Bihar startup policy kab aayi?", a: ["2022", "2023", "2024", "2026"], c: 0, exp: "2022 mein launch hui thi.", sec: "Governance" },
+                    { q: "BPSC ke naye chairman?", a: ["Person A", "Person B", "Person C", "Person D"], c: 2, exp: "Data updated as per 2026.", sec: "Appointments" }
                 ]
             }
         };
 
-        let activeMonth = "", currentQs = [], qIndex = 0, userAns = {};
+        let activeMonth = "", currentQs = [], qIndex = 0, userAns = {}, timer;
+        let timeLeft = 0, currentSetName = "";
 
         function showView(id) {
             document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
@@ -131,14 +163,32 @@
             showView('set-view');
             document.getElementById('month-title').innerText = month;
             const list = document.getElementById('set-list');
-            list.innerHTML = Object.keys(database[month]).map(s => `<button class="set-btn" onclick="startQuiz('${s}')">${s}</button>`).join('');
+            list.innerHTML = Object.keys(database[month]).map(s => `<button class="set-btn" onclick="prepareSettings('${s}')">${s}</button>`).join('');
         }
 
-        function startQuiz(setName) {
-            currentQs = database[activeMonth][setName];
+        function prepareSettings(setName) {
+            currentSetName = setName;
+            showView('settings-view');
+        }
+
+        function startQuizNow() {
+            currentQs = database[activeMonth][currentSetName];
             qIndex = 0; userAns = {};
+            timeLeft = parseInt(document.getElementById('timeLimitInput').value) * 60;
             showView('quiz-view');
             loadQuestion();
+            startTimer();
+        }
+
+        function startTimer() {
+            clearInterval(timer);
+            timer = setInterval(() => {
+                let mins = Math.floor(timeLeft / 60);
+                let secs = timeLeft % 60;
+                document.getElementById('timer-display').innerText = `Time: ${mins}:${secs < 10 ? '0' : ''}${secs}`;
+                if (timeLeft <= 0) { clearInterval(timer); finishQuiz(); }
+                timeLeft--;
+            }, 1000);
         }
 
         function loadQuestion() {
@@ -149,7 +199,7 @@
             list.innerHTML = q.a.map((opt, i) => `
                 <div class="option ${userAns[qIndex] === i ? 'selected' : ''}" onclick="saveAns(${i})">${opt}</div>
             `).join('');
-            document.getElementById('finalSubmit').style.display = (qIndex === currentQs.length - 1) ? 'block' : 'none';
+            document.getElementById('finalSubmitBtn').style.display = (qIndex === currentQs.length - 1) ? 'block' : 'none';
         }
 
         function saveAns(i) { userAns[qIndex] = i; loadQuestion(); }
@@ -158,27 +208,47 @@
             if(qIndex + n >= 0 && qIndex + n < currentQs.length) { qIndex += n; loadQuestion(); }
         }
 
-        function showResult() {
+        function finishQuiz() {
+            clearInterval(timer);
             showView('result-view');
-            let correct = 0, wrong = 0, neg = parseFloat(document.getElementById('negMark').value);
+            let correct = 0, wrong = 0, neg = parseFloat(document.getElementById('negMarkInput').value);
+            let weakAreas = {};
+
             currentQs.forEach((q, i) => {
-                if(userAns[i] === q.c) correct++;
-                else if(userAns[i] !== undefined) wrong++;
+                if(userAns[i] === q.c) {
+                    correct++;
+                } else if(userAns[i] !== undefined) {
+                    wrong++;
+                    weakAreas[q.sec] = (weakAreas[q.sec] || 0) + 1;
+                }
             });
+
             document.getElementById('res-total').innerText = currentQs.length;
             document.getElementById('res-correct').innerText = correct;
             document.getElementById('res-wrong').innerText = wrong;
             document.getElementById('res-score').innerText = (correct - (wrong * neg)).toFixed(2);
+
+            // Weak Section Analysis
+            let aBox = document.getElementById('analysis-box');
+            let weakHtml = "<h3>Weak Section Analysis:</h3>";
+            if(Object.keys(weakAreas).length > 0) {
+                for(let sec in weakAreas) {
+                    weakHtml += `<p>❌ <b>${sec}:</b> You missed ${weakAreas[sec]} questions.</p>`;
+                }
+            } else {
+                weakHtml += "<p>✅ All sections are strong! Keep it up.</p>";
+            }
+            aBox.innerHTML = weakHtml;
         }
 
         function showSolutions() {
             showView('solution-view');
             const list = document.getElementById('solution-list');
             list.innerHTML = currentQs.map((q, i) => `
-                <div class="sol-card">
+                <div class="sol-card" style="border-left-color: ${userAns[i] === q.c ? 'green' : 'red'}">
                     <p><b>Q${i+1}: ${q.q}</b></p>
-                    <p style="color:green">Ans: ${q.a[q.c]}</p>
-                    <div class="exp-box"><b>Explanation:</b> ${q.exp}</div>
+                    <p style="color:green">Correct: ${q.a[q.c]}</p>
+                    <div class="exp-box"><b>Logic:</b> ${q.exp}</div>
                 </div>
             `).join('');
         }
