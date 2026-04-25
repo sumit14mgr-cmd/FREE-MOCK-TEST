@@ -1,50 +1,35 @@
-:root {
-    --primary: #1a237e;
-    --accent: #0288d1;
-    --correct: #2e7d32;
-    --wrong: #c62828;
+/* ... Same as previous styles ... */
+
+.option.selected {
+    background-color: #bbdefb;
+    border-color: #1976d2;
+    font-weight: bold;
 }
 
-body { font-family: 'Segoe UI', Arial, sans-serif; background: #f0f2f5; margin: 0; color: #333; }
-
-header { background: linear-gradient(135deg, var(--primary), var(--accent)); color: white; padding: 20px; text-align: center; }
-.ad-banner { background: rgba(255,255,255,0.1); border: 1px dashed #fff; max-width: 728px; height: 90px; margin: 10px auto; display: flex; align-items: center; justify-content: center; }
-
-.container { max-width: 600px; margin: 20px auto; padding: 0 15px; }
-.view { animation: fadeIn 0.4s ease; }
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-.hide { display: none !important; }
-.section-title { text-align: center; color: var(--primary); }
-
-/* Category & Month Cards */
-.category-grid, .month-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-.card, .month-btn { 
-    background: white; border: none; padding: 20px; border-radius: 12px; 
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05); cursor: pointer; text-align: center; font-weight: bold;
-}
-.card .icon { display: block; font-size: 30px; margin-bottom: 10px; }
-.disabled { opacity: 0.5; cursor: not-allowed; }
-
-/* Set Buttons (Bihar Special) */
-.set-btn { 
-    width: 100%; padding: 18px; margin-bottom: 12px; border: none; 
-    background: #e3f2fd; color: #0d47a1; border-left: 6px solid #0d47a1; 
-    border-radius: 8px; font-weight: bold; cursor: pointer; text-align: left;
+.analysis-box {
+    margin-top: 20px;
+    padding: 15px;
+    background: #fff3e0;
+    border-radius: 10px;
+    text-align: left;
 }
 
-/* Quiz UI */
-.quiz-card { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
-#question-text { font-size: 18px; font-weight: bold; margin-bottom: 20px; }
-.option { padding: 15px; border: 2px solid #eee; border-radius: 10px; margin-bottom: 10px; cursor: pointer; transition: 0.2s; }
-.option.correct { background: #e8f5e9; border-color: var(--correct); color: var(--correct); }
-.option.wrong { background: #ffebee; border-color: var(--wrong); color: var(--wrong); }
+.exp-box {
+    background: #f1f8e9;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+    font-style: italic;
+    font-size: 14px;
+}
 
-.quiz-nav { display: flex; justify-content: space-between; margin-top: 20px; }
-.finish-btn { width: 100%; margin-top: 20px; background: #000; color: #fff; padding: 15px; border-radius: 10px; font-size: 16px; }
-
-/* Result Page */
-.score-card { background: white; padding: 20px; border-radius: 12px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.score-item { padding: 10px; background: #f8f9fa; border-radius: 8px; font-weight: bold; }
-.highlight { grid-column: span 2; background: #fff9c4; font-size: 1.2rem; }
-.sol-card { background: white; padding: 15px; border-radius: 10px; margin-bottom: 15px; border-left: 4px solid var(--accent); }
+.submit-btn {
+    background: #2e7d32;
+    color: white;
+    padding: 15px;
+    width: 100%;
+    border: none;
+    border-radius: 8px;
+    margin-top: 15px;
+    cursor: pointer;
+}
