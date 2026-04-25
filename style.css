@@ -1,44 +1,32 @@
 :root {
-    --primary: #4a90e2;
-    --success: #28a745;
-    --danger: #dc3545;
-    --warning: #ffc107;
-    --light: #f8f9fa;
+    --primary: #6366f1;
+    --accent: #f43f5e;
+    --bg: #f8fafc;
 }
 
-body { font-family: 'Poppins', sans-serif; background: #eef2f7; margin: 0; color: #333; }
+body { font-family: 'Inter', sans-serif; background: var(--bg); margin: 0; }
 
-header { background: linear-gradient(135deg, #1e3c72, #2a5298); color: white; padding: 20px; text-align: center; }
-.ad-banner { background: rgba(255,255,255,0.1); margin: 10px auto; max-width: 728px; height: 90px; border: 1px dashed #fff; display: flex; align-items: center; justify-content: center; }
+.main-tabs { display: flex; gap: 10px; margin-bottom: 10px; justify-content: center; padding: 10px; }
+.tab-btn { padding: 10px 25px; border-radius: 30px; border: none; background: #ddd; cursor: pointer; font-weight: bold; }
+.tab-btn.active { background: var(--primary); color: white; }
 
-.container { max-width: 800px; margin: 20px auto; padding: 0 15px; }
+/* Monthly Sub-Tabs */
+.sub-tab-wrapper { overflow-x: auto; white-space: nowrap; padding: 10px 0; margin-bottom: 20px; }
+.month-btn { 
+    display: inline-block; padding: 8px 20px; margin: 0 5px; 
+    background: white; border: 1px solid #cbd5e1; border-radius: 20px; 
+    cursor: pointer; transition: 0.3s;
+}
+.month-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
 
-.month-tabs { display: flex; justify-content: space-between; background: white; padding: 15px; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+#quiz-box { background: white; padding: 25px; border-radius: 20px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
+.option { 
+    padding: 15px; border: 2px solid #e2e8f0; border-radius: 12px; 
+    margin-bottom: 10px; cursor: pointer; transition: 0.2s; 
+}
+.option:hover { border-color: var(--primary); background: #f5f3ff; }
+.option.correct { background: #22c55e !important; color: white; border-color: #16a34a; }
+.option.wrong { background: #ef4444 !important; color: white; border-color: #dc2626; }
 
-#quiz-box, #result-box { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
-
-.quiz-header { display: flex; justify-content: space-between; font-size: 14px; color: #666; margin-bottom: 15px; }
-
-#question-text { font-size: 20px; font-weight: 600; margin-bottom: 25px; line-height: 1.5; }
-
-.option { padding: 15px; border: 2px solid #ddd; border-radius: 10px; margin-bottom: 12px; cursor: pointer; transition: 0.3s; font-weight: 500; }
-.option:hover { background: #f0f7ff; border-color: var(--primary); }
-.option.selected { border-color: var(--primary); background: #eef6ff; }
-.option.correct { background: var(--success); color: white; border-color: var(--success); }
-.option.wrong { background: var(--danger); color: white; border-color: var(--danger); }
-
-.action-buttons { display: flex; justify-content: space-between; margin-top: 30px; }
-button { padding: 12px 25px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.3s; }
-
-#prevBtn { background: #6c757d; color: white; }
-#nextBtn { background: var(--primary); color: white; }
-#skipBtn { background: var(--warning); color: #000; }
-#submitBtn { width: 100%; margin-top: 20px; background: #000; color: #fff; }
-
+.nav-controls { display: flex; justify-content: space-between; margin-top: 25px; }
 .hide { display: none; }
-
-/* Result & Solution Styles */
-.stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin: 20px 0; }
-.stat-item { padding: 15px; background: var(--light); border-radius: 8px; text-align: center; font-weight: bold; }
-.sol-card { background: white; margin-top: 15px; padding: 20px; border-radius: 10px; border-left: 5px solid var(--primary); }
-.exp-text { background: #f1f8e9; padding: 10px; border-radius: 5px; margin-top: 10px; font-size: 14px; border: 1px solid #c5e1a5; }
