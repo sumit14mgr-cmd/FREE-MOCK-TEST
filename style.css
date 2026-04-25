@@ -1,29 +1,50 @@
-:root { --primary: #1e3c72; --accent: #00d2ff; --white: #ffffff; }
-body { font-family: 'Segoe UI', sans-serif; background: #f4f7f6; margin: 0; }
+:root {
+    --primary: #1a237e;
+    --accent: #0288d1;
+    --correct: #2e7d32;
+    --wrong: #c62828;
+}
 
-header { background: linear-gradient(to right, var(--primary), var(--accent)); color: white; padding: 20px; text-align: center; }
-.ad-banner { background: rgba(255,255,255,0.2); height: 80px; margin: 10px auto; max-width: 728px; border: 1px dashed white; line-height: 80px; }
+body { font-family: 'Segoe UI', Arial, sans-serif; background: #f0f2f5; margin: 0; color: #333; }
 
-.container { max-width: 800px; margin: 20px auto; padding: 15px; }
-.view { animation: fadeIn 0.5s ease; }
+header { background: linear-gradient(135deg, var(--primary), var(--accent)); color: white; padding: 20px; text-align: center; }
+.ad-banner { background: rgba(255,255,255,0.1); border: 1px dashed #fff; max-width: 728px; height: 90px; margin: 10px auto; display: flex; align-items: center; justify-content: center; }
+
+.container { max-width: 600px; margin: 20px auto; padding: 0 15px; }
+.view { animation: fadeIn 0.4s ease; }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-.grid-menu, .month-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-top: 20px; }
+.hide { display: none !important; }
+.section-title { text-align: center; color: var(--primary); }
 
-.menu-card, .month-btn, .set-btn { 
-    padding: 20px; border: none; border-radius: 12px; background: white; 
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1); cursor: pointer; transition: 0.3s; font-size: 16px; font-weight: bold;
+/* Category & Month Cards */
+.category-grid, .month-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+.card, .month-btn { 
+    background: white; border: none; padding: 20px; border-radius: 12px; 
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05); cursor: pointer; text-align: center; font-weight: bold;
 }
-.menu-card:hover, .month-btn:hover { transform: translateY(-5px); background: var(--primary); color: white; }
+.card .icon { display: block; font-size: 30px; margin-bottom: 10px; }
+.disabled { opacity: 0.5; cursor: not-allowed; }
 
-.set-btn { display: block; width: 100%; margin-bottom: 10px; text-align: left; background: #e3f2fd; color: #1565c0; border-left: 5px solid #1565c0; }
-.set-btn:hover { background: #bbdefb; }
+/* Set Buttons (Bihar Special) */
+.set-btn { 
+    width: 100%; padding: 18px; margin-bottom: 12px; border: none; 
+    background: #e3f2fd; color: #0d47a1; border-left: 6px solid #0d47a1; 
+    border-radius: 8px; font-weight: bold; cursor: pointer; text-align: left;
+}
 
-.hide { display: none; }
-.back-btn { background: #666; color: white; border: none; padding: 5px 15px; border-radius: 5px; cursor: pointer; }
+/* Quiz UI */
+.quiz-card { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+#question-text { font-size: 18px; font-weight: bold; margin-bottom: 20px; }
+.option { padding: 15px; border: 2px solid #eee; border-radius: 10px; margin-bottom: 10px; cursor: pointer; transition: 0.2s; }
+.option.correct { background: #e8f5e9; border-color: var(--correct); color: var(--correct); }
+.option.wrong { background: #ffebee; border-color: var(--wrong); color: var(--wrong); }
 
-/* Quiz Styles */
-#quiz-box { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 10px 20px rgba(0,0,0,0.05); margin-top: 20px; }
-.option { padding: 15px; border: 2px solid #eee; border-radius: 10px; margin-top: 10px; cursor: pointer; }
-.option.correct { background: #d4edda; border-color: #28a745; }
-.option.wrong { background: #f8d7da; border-color: #dc3545; }
+.quiz-nav { display: flex; justify-content: space-between; margin-top: 20px; }
+.finish-btn { width: 100%; margin-top: 20px; background: #000; color: #fff; padding: 15px; border-radius: 10px; font-size: 16px; }
+
+/* Result Page */
+.score-card { background: white; padding: 20px; border-radius: 12px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.score-item { padding: 10px; background: #f8f9fa; border-radius: 8px; font-weight: bold; }
+.highlight { grid-column: span 2; background: #fff9c4; font-size: 1.2rem; }
+.sol-card { background: white; padding: 15px; border-radius: 10px; margin-bottom: 15px; border-left: 4px solid var(--accent); }
