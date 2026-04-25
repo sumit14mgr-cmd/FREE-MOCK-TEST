@@ -1,99 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BPSC Professional Mock Test</title>
-    <style>
-        :root { --primary: #007bff; --success: #28a745; --danger: #dc3545; --warning: #ffc107; --dark: #343a40; }
-        body { font-family: 'Segoe UI', sans-serif; background: #f4f7f6; margin: 0; padding: 10px; }
-        .container { max-width: 800px; margin: auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        
-        /* Navigation & Timer */
-        .header-box { display: flex; justify-content: space-between; align-items: center; background: var(--dark); color: white; padding: 10px; border-radius: 8px; margin-bottom: 15px; }
-        .timer-box { font-size: 1.2em; font-weight: bold; color: var(--warning); }
-        
-        /* Step Logic */
-        .step { display: none; }
-        .active { display: block; }
-
-        /* Quiz UI */
-        .q-card { border: 1px solid #ddd; padding: 20px; border-radius: 10px; margin-bottom: 20px; }
-        .opt-btn { display: block; width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; background: white; text-align: left; cursor: pointer; font-size: 16px; }
-        .opt-btn:hover { background: #f0f0f0; }
-        .selected-opt { background: #d1ecf1 !important; border-color: #bee5eb !important; }
-
-        /* Navigation Buttons */
-        .nav-controls { display: flex; justify-content: space-between; gap: 10px; margin-top: 20px; }
-        .nav-btn { flex: 1; padding: 12px; border: none; border-radius: 5px; color: white; font-weight: bold; cursor: pointer; }
-        .btn-next { background: var(--success); }
-        .btn-prev { background: var(--primary); }
-        .btn-skip { background: var(--warning); color: black; }
-
-        /* Question Palette (Numbers) */
-        .palette { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 20px; border-top: 1px solid #ddd; padding-top: 15px; }
-        .pal-item { width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; border: 1px solid #ccc; border-radius: 5px; cursor: pointer; font-size: 14px; }
-        .pal-answered { background: var(--success); color: white; border: none; }
-        .pal-skipped { background: var(--danger); color: white; border: none; }
-        .pal-current { border: 2px solid var(--primary); font-weight: bold; }
-
-        button.main-menu { width: 100%; padding: 15px; margin: 10px 0; border: none; background: var(--primary); color: white; border-radius: 8px; font-size: 18px; }
-    </style>
+    <title>FREE MOCK TEST</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="container">
-    <div id="step1" class="step active">
-        <h1>Exam Portal</h1>
-        <button class="main-menu" onclick="showStep(2, 'Current Affairs')">Current Affairs</button>
-        <button class="main-menu" onclick="showStep(2, 'Static GK')">Static GK</button>
-    </div>
-
-    <div id="step2" class="step">
-        <button onclick="showStep(1)">← Back</button>
-        <h2>Select Month</h2>
-        <button class="main-menu" onclick="showStep(3, 'Jan 2026')">January 2026</button>
-        <button class="main-menu" onclick="showStep(3, 'Feb 2026')">February 2026</button>
-    </div>
-
-    <div id="step3" class="step">
-        <button onclick="showStep(2)">← Back</button>
-        <h2>Mock Settings</h2>
-        <div style="background:#f8f9fa; padding:20px; border-radius:10px;">
-            <p>Time (Minutes): <select id="setTimer" style="padding:5px;">
-                <option value="5">5 Min</option>
-                <option value="10">10 Min</option>
-                <option value="15">15 Min</option>
-                <option value="30">30 Min</option>
-            </select></p>
-            <p>Negative Marking: <input type="number" id="negVal" value="0.33" step="0.01" style="width:60px;"></p>
-            <hr>
-            <button class="main-menu" style="background:var(--success)" onclick="startMock('Bihar Special')">Start Bihar Special Test</button>
-            <button class="main-menu" style="background:var(--success)" onclick="startMock('National')">Start National Test</button>
+    <header>
+        <h1>FREE MOCK TEST</h1>
+        <div class="ad-container">
+            <p style="color: #666; font-size: 12px;">Advertisement</p>
         </div>
-    </div>
+    </header>
 
-    <div id="step4" class="step">
-        <div class="header-box">
-            <span id="test-title">Test</span>
-            <div class="timer-box">Time: <span id="time-left">00:00</span></div>
+    <nav class="tabs">
+        <button class="tab-btn active" onclick="openTab('current-affairs')">Current Affairs</button>
+        <button class="tab-btn" onclick="openTab('science')">Science</button>
+        <button class="tab-btn" onclick="openTab('history')">History</button>
+    </nav>
+
+    <main id="quiz-container">
+        <div id="question-box">
+            <h2 id="tab-title">Current Affairs Quiz</h2>
+            <div id="question-text">Question will appear here...</div>
+            <div id="options-container"></div>
+            <button id="next-btn" onclick="nextQuestion()" style="display:none;">Next Question</button>
         </div>
+    </main>
 
-        <div id="quiz-container">
-            </div>
-
-        <div class="nav-controls">
-            <button class="nav-btn btn-prev" onclick="changeQ(-1)">Previous</button>
-            <button class="nav-btn btn-skip" onclick="skipQ()">Skip</button>
-            <button class="nav-btn btn-next" onclick="changeQ(1)">Next</button>
-        </div>
-
-        <div class="palette" id="palette-area"></div>
-        
-        <button class="main-menu" style="margin-top:20px; background:var(--danger)" onclick="finishTest()">Finish Test</button>
-    </div>
-</div>
-
-<script src="app.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
