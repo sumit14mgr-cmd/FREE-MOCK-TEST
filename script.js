@@ -2,9 +2,6 @@ const quizData = {
     "current-affairs": [
         { q: "Bharat ke naye CDS kaun hain?", a: ["Person A", "Person B", "Anil Chauhan", "Person D"], correct: 2 },
         { q: "G20 2024 kaha hua?", a: ["India", "Brazil", "USA", "France"], correct: 1 }
-    ],
-    "science": [
-        { q: "Pani ka formula kya hai?", a: ["CO2", "O2", "H2O", "NaCl"], correct: 2 }
     ]
 };
 
