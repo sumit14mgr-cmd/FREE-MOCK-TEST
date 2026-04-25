@@ -1,85 +1,44 @@
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f0f2f5;
-    margin: 0;
-    text-align: center;
+:root {
+    --primary: #4a90e2;
+    --success: #28a745;
+    --danger: #dc3545;
+    --warning: #ffc107;
+    --light: #f8f9fa;
 }
 
-header {
-    background: linear-gradient(135deg, #6e8efb, #a777e3);
-    color: white;
-    padding: 20px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-}
+body { font-family: 'Poppins', sans-serif; background: #eef2f7; margin: 0; color: #333; }
 
-.ad-container {
-    background: #fff;
-    height: 90px;
-    width: 90%;
-    margin: 15px auto;
-    border: 1px dashed #ccc;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+header { background: linear-gradient(135deg, #1e3c72, #2a5298); color: white; padding: 20px; text-align: center; }
+.ad-banner { background: rgba(255,255,255,0.1); margin: 10px auto; max-width: 728px; height: 90px; border: 1px dashed #fff; display: flex; align-items: center; justify-content: center; }
 
-.tabs {
-    display: flex;
-    justify-content: center;
-    background: #fff;
-    padding: 10px;
-    overflow-x: auto;
-}
+.container { max-width: 800px; margin: 20px auto; padding: 0 15px; }
 
-.tab-btn {
-    padding: 10px 20px;
-    border: none;
-    background: none;
-    font-weight: bold;
-    cursor: pointer;
-    border-bottom: 3px solid transparent;
-    transition: 0.3s;
-}
+.month-tabs { display: flex; justify-content: space-between; background: white; padding: 15px; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
 
-.tab-btn.active {
-    color: #6e8efb;
-    border-bottom: 3px solid #6e8efb;
-}
+#quiz-box, #result-box { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
 
-#quiz-container {
-    max-width: 600px;
-    margin: 30px auto;
-    background: white;
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-}
+.quiz-header { display: flex; justify-content: space-between; font-size: 14px; color: #666; margin-bottom: 15px; }
 
-#options-container {
-    display: grid;
-    gap: 10px;
-    margin-top: 20px;
-}
+#question-text { font-size: 20px; font-weight: 600; margin-bottom: 25px; line-height: 1.5; }
 
-.option {
-    padding: 15px;
-    border: 2px solid #e0e0e0;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: 0.2s;
-}
+.option { padding: 15px; border: 2px solid #ddd; border-radius: 10px; margin-bottom: 12px; cursor: pointer; transition: 0.3s; font-weight: 500; }
+.option:hover { background: #f0f7ff; border-color: var(--primary); }
+.option.selected { border-color: var(--primary); background: #eef6ff; }
+.option.correct { background: var(--success); color: white; border-color: var(--success); }
+.option.wrong { background: var(--danger); color: white; border-color: var(--danger); }
 
-.option:hover {
-    background-color: #f8f9fa;
-    border-color: #6e8efb;
-}
+.action-buttons { display: flex; justify-content: space-between; margin-top: 30px; }
+button { padding: 12px 25px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.3s; }
 
-#next-btn {
-    margin-top: 20px;
-    padding: 10px 30px;
-    background: #28a745;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
+#prevBtn { background: #6c757d; color: white; }
+#nextBtn { background: var(--primary); color: white; }
+#skipBtn { background: var(--warning); color: #000; }
+#submitBtn { width: 100%; margin-top: 20px; background: #000; color: #fff; }
+
+.hide { display: none; }
+
+/* Result & Solution Styles */
+.stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin: 20px 0; }
+.stat-item { padding: 15px; background: var(--light); border-radius: 8px; text-align: center; font-weight: bold; }
+.sol-card { background: white; margin-top: 15px; padding: 20px; border-radius: 10px; border-left: 5px solid var(--primary); }
+.exp-text { background: #f1f8e9; padding: 10px; border-radius: 5px; margin-top: 10px; font-size: 14px; border: 1px solid #c5e1a5; }
