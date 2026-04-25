@@ -4,7 +4,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FREE MOCK TEST</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        /* CSS: Saara Design Yahan Hai */
+        :root { --primary: #1a237e; --accent: #0288d1; --bg: #f4f7f6; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; padding: 0; }
+        header { background: linear-gradient(135deg, var(--primary), var(--accent)); color: white; padding: 20px; text-align: center; }
+        .ad-banner { background: rgba(255,255,255,0.1); border: 1px dashed white; max-width: 728px; height: 90px; margin: 10px auto; display: flex; align-items: center; justify-content: center; }
+        .container { max-width: 600px; margin: 20px auto; padding: 15px; }
+        
+        /* Sabse Important: Jo screen active nahi hai wo chupi rahegi */
+        .view { display: none; animation: fadeIn 0.3s ease; }
+        .view.active { display: block; }
+        
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        
+        .section-title { text-align: center; color: var(--primary); margin-bottom: 20px; }
+        .category-grid, .month-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .card, .month-btn { background: white; border: none; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); cursor: pointer; font-weight: bold; }
+        .set-btn { width: 100%; padding: 18px; margin-bottom: 12px; border: none; background: #e3f2fd; color: #0d47a1; border-left: 6px solid #0d47a1; border-radius: 8px; font-weight: bold; cursor: pointer; text-align: left; font-size: 16px; }
+        
+        .quiz-card { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .option { padding: 15px; border: 2px solid #eee; border-radius: 10px; margin-top: 10px; cursor: pointer; }
+        .option.selected { background: #bbdefb; border-color: #1976d2; font-weight: bold; }
+        
+        .score-card { background: white; padding: 20px; border-radius: 12px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; text-align: center; }
+        .highlight { grid-column: span 2; background: #fff9c4; font-size: 1.2rem; padding: 15px; border-radius: 10px; }
+        .analysis-box { margin-top: 20px; padding: 15px; background: #fff3e0; border-radius: 10px; border: 1px solid #ffe0b2; }
+        .sol-card { background: white; padding: 15px; border-radius: 10px; margin-bottom: 15px; border-left: 5px solid var(--accent); }
+        .exp-box { background: #f1f8e9; padding: 10px; margin-top: 10px; font-size: 14px; border-radius: 5px; color: #33691e; }
+        
+        .nav-controls { display: flex; justify-content: space-between; margin-top: 20px; }
+        .submit-btn { width: 100%; margin-top: 15px; background: #2e7d32; color: white; padding: 15px; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold; display: none; }
+        .back-btn { background: #666; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; margin-bottom: 10px; }
+    </style>
 </head>
 <body>
 
@@ -14,66 +46,142 @@
     </header>
 
     <div class="container">
-        <div id="category-view" class="view">
+        <div id="category-view" class="view active">
             <h2 class="section-title">Select Subject</h2>
             <div class="category-grid">
-                <button class="card" onclick="showMonthlyView()">
-                    <span class="icon">📅</span>
-                    <span>Current Affairs</span>
-                </button>
-                <button class="card disabled"><span>History</span></button>
+                <button class="card" onclick="showMonthlyView()">📅<br>Current Affairs</button>
+                <button class="card" style="opacity:0.5" disabled>📜<br>History</button>
             </div>
         </div>
 
-        <div id="monthly-view" class="view hide">
+        <div id="monthly-view" class="view">
             <button class="back-btn" onclick="showView('category-view')">← Back</button>
             <h2 class="section-title">Select Month</h2>
             <div id="month-list" class="month-grid"></div>
         </div>
 
-        <div id="set-view" class="view hide">
+        <div id="set-view" class="view">
             <button class="back-btn" onclick="showView('monthly-view')">← Back</button>
-            <h2 id="month-name-title" class="section-title">Month</h2>
-            <div id="set-list" class="set-container"></div>
+            <h2 id="month-title" class="section-title">Month</h2>
+            <div id="set-list"></div>
         </div>
 
-        <div id="quiz-view" class="view hide">
-            <div class="quiz-header">
-                <span id="q-count">Question 1/10</span>
-                <div class="neg-box">Neg Mark: <input type="number" id="negMark" value="0.25" step="0.05"></div>
+        <div id="quiz-view" class="view">
+            <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+                <span id="q-count">Question 1</span>
+                <span>Neg: <input type="number" id="negMark" value="0.25" style="width:50px"></span>
             </div>
             <div class="quiz-card">
-                <div id="question-text">Loading...</div>
+                <div id="question-text" style="font-weight:bold; font-size:18px;"></div>
                 <div id="options-list"></div>
                 <div class="nav-controls">
                     <button onclick="changeQuestion(-1)">Previous</button>
                     <button onclick="changeQuestion(1)">Next / Skip</button>
                 </div>
-                <button id="submitBtn" class="hide submit-btn" onclick="showResult()">Submit Quiz</button>
+                <button id="finalSubmit" class="submit-btn" onclick="showResult()">Submit Quiz</button>
             </div>
         </div>
 
-        <div id="result-view" class="view hide">
-            <h2 class="section-title">Result & Performance</h2>
+        <div id="result-view" class="view">
+            <h2 class="section-title">Performance</h2>
             <div class="score-card">
-                <div class="score-item">Total Qs: <span id="res-total"></span></div>
-                <div class="score-item">Correct: <span id="res-correct" style="color:green"></span></div>
-                <div class="score-item">Wrong: <span id="res-wrong" style="color:red"></span></div>
-                <div class="score-item highlight">Your Score: <span id="res-score"></span></div>
+                <div class="score-item">Total: <span id="res-total"></span></div>
+                <div class="score-item">Correct: <span id="res-correct"></span></div>
+                <div class="score-item">Wrong: <span id="res-wrong"></span></div>
+                <div class="score-item highlight">Score: <span id="res-score"></span></div>
             </div>
-            <div id="analysis-section" class="analysis-box"></div>
-            <div class="result-btns">
-                <button class="sol-btn" onclick="showSolutions()">View Solutions & Explanations</button>
-                <button class="re-btn" onclick="reattempt()">Re-attempt Test</button>
-            </div>
+            <div id="analysis-box" class="analysis-box"></div>
+            <button class="submit-btn" style="display:block; background:var(--accent)" onclick="showSolutions()">View Solutions</button>
+            <button class="submit-btn" style="display:block; background:#666; margin-top:10px;" onclick="location.reload()">Home / Re-attempt</button>
         </div>
 
-        <div id="solution-view" class="view hide">
+        <div id="solution-view" class="view">
             <button class="back-btn" onclick="showView('result-view')">← Back to Score</button>
             <div id="solution-list"></div>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        // DATABASE: Yahan data bharein
+        const database = {
+            "January 2026": {
+                "Bihar Special": [
+                    { q: "Bihar ka pehla floating solar power plant kaha hai?", a: ["Patna", "Darbhanga", "Supaul", "Gaya"], c: 1, exp: "Darbhanga ke Kadirabad mein bana hai.", sec: "Bihar News" },
+                    { q: "Bihar startup policy kab aayi?", a: ["2022", "2023", "2024", "2026"], c: 0, exp: "2022 mein launch hui thi.", sec: "Policy" }
+                ]
+            }
+        };
+
+        let activeMonth = "", currentQs = [], qIndex = 0, userAns = {};
+
+        function showView(id) {
+            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            window.scrollTo(0,0);
+        }
+
+        function showMonthlyView() {
+            showView('monthly-view');
+            const list = document.getElementById('month-list');
+            list.innerHTML = Object.keys(database).map(m => `<button class="month-btn" onclick="showSetView('${m}')">${m}</button>`).join('');
+        }
+
+        function showSetView(month) {
+            activeMonth = month;
+            showView('set-view');
+            document.getElementById('month-title').innerText = month;
+            const list = document.getElementById('set-list');
+            list.innerHTML = Object.keys(database[month]).map(s => `<button class="set-btn" onclick="startQuiz('${s}')">${s}</button>`).join('');
+        }
+
+        function startQuiz(setName) {
+            currentQs = database[activeMonth][setName];
+            qIndex = 0; userAns = {};
+            showView('quiz-view');
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const q = currentQs[qIndex];
+            document.getElementById('q-count').innerText = `Question ${qIndex + 1}/${currentQs.length}`;
+            document.getElementById('question-text').innerText = q.q;
+            const list = document.getElementById('options-list');
+            list.innerHTML = q.a.map((opt, i) => `
+                <div class="option ${userAns[qIndex] === i ? 'selected' : ''}" onclick="saveAns(${i})">${opt}</div>
+            `).join('');
+            document.getElementById('finalSubmit').style.display = (qIndex === currentQs.length - 1) ? 'block' : 'none';
+        }
+
+        function saveAns(i) { userAns[qIndex] = i; loadQuestion(); }
+
+        function changeQuestion(n) {
+            if(qIndex + n >= 0 && qIndex + n < currentQs.length) { qIndex += n; loadQuestion(); }
+        }
+
+        function showResult() {
+            showView('result-view');
+            let correct = 0, wrong = 0, neg = parseFloat(document.getElementById('negMark').value);
+            currentQs.forEach((q, i) => {
+                if(userAns[i] === q.c) correct++;
+                else if(userAns[i] !== undefined) wrong++;
+            });
+            document.getElementById('res-total').innerText = currentQs.length;
+            document.getElementById('res-correct').innerText = correct;
+            document.getElementById('res-wrong').innerText = wrong;
+            document.getElementById('res-score').innerText = (correct - (wrong * neg)).toFixed(2);
+        }
+
+        function showSolutions() {
+            showView('solution-view');
+            const list = document.getElementById('solution-list');
+            list.innerHTML = currentQs.map((q, i) => `
+                <div class="sol-card">
+                    <p><b>Q${i+1}: ${q.q}</b></p>
+                    <p style="color:green">Ans: ${q.a[q.c]}</p>
+                    <div class="exp-box"><b>Explanation:</b> ${q.exp}</div>
+                </div>
+            `).join('');
+        }
+    </script>
 </body>
 </html>
