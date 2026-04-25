@@ -1,144 +1,131 @@
-// QUESTION DATABASE: Yahan aap questions add kar sakte hain
-const quizDatabase = {
-    "jan_2026": [
-        {
-            q: "Who was appointed as the new Chairman of ISRO in January 2026?",
-            options: ["Person A", "Person B", "Person C", "Person D"],
-            correct: 2,
-            category: "Science & Tech",
-            explanation: "ISRO has appointed Person C due to his contribution in space research."
-        },
-        {
-            q: "Which state won the Best Tableau award in Republic Day 2026?",
-            options: ["Bihar", "Uttar Pradesh", "Maharashtra", "Uttarakhand"],
-            correct: 0,
-            category: "National",
-            explanation: "Bihar's tableau showcased its cultural heritage and won 1st prize."
-        }
+const quizData = {
+    "Jan 2026": [
+        { q: "January 2026 ka pehla sawal?", a: ["Option A", "Option B", "Correct A", "Option D"], c: 2, exp: "Jan explanation here." },
+        { q: "Second question of January?", a: ["Ans A", "Ans B", "Ans C", "Ans D"], c: 0, exp: "Logic detail here." }
     ],
-    "feb_2026": [] // Add Feb data here
+    "Feb 2026": [
+        { q: "February 2026 special question?", a: ["A", "B", "C", "D"], c: 1, exp: "Feb explanation here." }
+    ],
+    // Baaki months dec 2026 tak yahan add karein...
 };
 
-let currentQuestions = [];
-let currentIndex = 0;
-let userAnswers = {}; // Stores {questionIndex: selectedOptionIndex}
+let currentMonth = "Jan 2026";
+let qIndex = 0;
+let userAnswers = {};
 
-function initQuiz() {
-    const month = document.getElementById('monthSelect').value;
-    currentQuestions = quizDatabase[month] || [];
-    currentIndex = 0;
-    userAnswers = {};
+// 1. Load Monthly Sub-tabs on Start
+function loadMonths() {
+    const monthContainer = document.getElementById('month-list');
+    const months = ["Jan 2026", "Feb 2026", "Mar 2026", "Apr 2026", "May 2026", "Jun 2026", "Jul 2026", "Aug 2026", "Sep 2026", "Oct 2026", "Nov 2026", "Dec 2026"];
     
+    monthContainer.innerHTML = months.map(m => 
+        `<button class="month-btn ${m === currentMonth ? 'active' : ''}" onclick="selectMonth('${m}')">${m}</button>`
+    ).join('');
+}
+
+function selectMonth(m) {
+    currentMonth = m;
+    qIndex = 0;
+    userAnswers = {};
+    loadMonths();
+    startQuiz();
+}
+
+function startQuiz() {
     document.getElementById('result-box').classList.add('hide');
     document.getElementById('solution-box').classList.add('hide');
     document.getElementById('quiz-box').classList.remove('hide');
-    
-    if(currentQuestions.length > 0) {
-        showQuestion();
-    } else {
-        document.getElementById('question-text').innerText = "No questions found for this month.";
-    }
+    loadQuestion();
 }
 
-function showQuestion() {
-    const q = currentQuestions[currentIndex];
-    document.getElementById('q-count').innerText = `Question ${currentIndex + 1}/${currentQuestions.length}`;
-    document.getElementById('q-category').innerText = `Category: ${q.category}`;
+function loadQuestion() {
+    const data = quizData[currentMonth] || [];
+    if(data.length === 0) {
+        document.getElementById('question-text').innerText = "Questions coming soon for " + currentMonth;
+        document.getElementById('options-list').innerHTML = "";
+        return;
+    }
+
+    const q = data[qIndex];
+    document.getElementById('q-status').innerText = `Question ${qIndex + 1}/${data.length}`;
+    document.getElementById('q-month-tag').innerText = currentMonth;
     document.getElementById('question-text').innerText = q.q;
-    
-    const optionsList = document.getElementById('options-list');
-    optionsList.innerHTML = "";
-    
-    q.options.forEach((opt, index) => {
+
+    const optList = document.getElementById('options-list');
+    optList.innerHTML = "";
+    q.a.forEach((opt, i) => {
         const div = document.createElement('div');
         div.className = "option";
-        if(userAnswers[currentIndex] === index) div.classList.add('selected');
-        
+        if(userAnswers[qIndex] === i) div.classList.add('selected');
         div.innerText = opt;
-        div.onclick = () => selectOption(index);
-        optionsList.appendChild(div);
+        div.onclick = () => handleAnswer(i, q.c);
+        optList.appendChild(div);
     });
 
-    // Toggle Buttons
-    document.getElementById('prevBtn').disabled = currentIndex === 0;
-    document.getElementById('submitBtn').classList.toggle('hide', currentIndex !== currentQuestions.length - 1);
+    document.getElementById('finishBtn').classList.toggle('hide', qIndex !== data.length - 1);
 }
 
-function selectOption(index) {
-    userAnswers[currentIndex] = index;
-    const options = document.querySelectorAll('.option');
-    options.forEach(o => o.classList.remove('selected'));
-    options[index].classList.add('selected');
-    
-    // Auto-Color feedback (Optional: Instant color)
-    const correctIdx = currentQuestions[currentIndex].correct;
-    if(index === correctIdx) {
-        options[index].classList.add('correct');
+function handleAnswer(selected, correct) {
+    userAnswers[qIndex] = selected;
+    const opts = document.querySelectorAll('.option');
+    opts.forEach(o => o.className = "option");
+
+    if(selected === correct) {
+        opts[selected].classList.add('correct');
     } else {
-        options[index].classList.add('wrong');
-        options[correctIdx].classList.add('correct');
+        opts[selected].classList.add('wrong');
+        opts[correct].classList.add('correct');
     }
-}
-
-function changeQuestion(step) {
-    currentIndex += step;
-    showQuestion();
 }
 
 function calculateResult() {
-    let score = 0;
-    let correct = 0;
-    let wrong = 0;
-    let analysis = {};
     const neg = parseFloat(document.getElementById('negMark').value);
+    let correct = 0, wrong = 0;
+    const data = quizData[currentMonth];
 
-    currentQuestions.forEach((q, i) => {
-        if(userAnswers[i] !== undefined) {
-            if(userAnswers[i] === q.correct) {
-                correct++;
-                score += 1;
-            } else {
-                wrong++;
-                score -= neg;
-                analysis[q.category] = (analysis[q.category] || 0) + 1;
-            }
-        }
+    data.forEach((q, i) => {
+        if(userAnswers[i] === q.c) correct++;
+        else if(userAnswers[i] !== undefined) wrong++;
     });
 
-    document.getElementById('quiz-box').classList.add('hide');
-    document.getElementById('result-box').classList.remove('hide');
+    const finalScore = (correct * 1) - (wrong * neg);
     
-    document.getElementById('res-total').innerText = currentQuestions.length;
-    document.getElementById('res-correct').innerText = correct;
-    document.getElementById('res-wrong').innerText = wrong;
-    document.getElementById('res-score').innerText = score.toFixed(2);
-
-    let weakHtml = "<h3>Weak Areas:</h3>";
-    for(let cat in analysis) {
-        weakHtml += `<p>⚠️ ${cat}: ${analysis[cat]} mistakes</p>`;
-    }
-    document.getElementById('weak-analysis').innerHTML = (Object.keys(analysis).length > 0) ? weakHtml : "<p>✅ Excellent! No weak areas found.</p>";
+    document.getElementById('quiz-box').classList.add('hide');
+    const resBox = document.getElementById('result-box');
+    resBox.classList.remove('hide');
+    resBox.innerHTML = `
+        <h2>Result: ${currentMonth}</h2>
+        <p>Score: <b>${finalScore.toFixed(2)}</b></p>
+        <p>Correct: ${correct} | Wrong: ${wrong}</p>
+        <button onclick="showSolutions()">View Solution</button>
+        <button onclick="startQuiz()">Re-attempt</button>
+    `;
 }
 
-function toggleSolutions() {
+function showSolutions() {
     const solBox = document.getElementById('solution-box');
-    solBox.classList.toggle('hide');
-    solBox.innerHTML = "<h2>Detailed Solutions</h2>";
-
-    currentQuestions.forEach((q, i) => {
-        const userAns = userAnswers[i] !== undefined ? q.options[userAnswers[i]] : "Skipped";
-        const isCorrect = userAnswers[i] === q.correct;
-
+    solBox.classList.remove('hide');
+    solBox.innerHTML = "<h3>Explanations</h3>";
+    
+    quizData[currentMonth].forEach((q, i) => {
         solBox.innerHTML += `
-            <div class="sol-card">
-                <p><strong>Q${i+1}:</strong> ${q.q}</p>
-                <p>Your Answer: <span style="color:${isCorrect?'green':'red'}">${userAns}</span></p>
-                <p>Correct Answer: <span style="color:green">${q.options[q.correct]}</span></p>
-                <div class="exp-text"><strong>Explanation:</strong> ${q.explanation}</div>
+            <div style="margin-bottom:20px; padding:10px; border-bottom:1px solid #ccc;">
+                <p><b>Q: ${q.q}</b></p>
+                <p style="color:green">Ans: ${q.a[q.c]}</p>
+                <p style="background:#eee; padding:5px;"><i>Logic: ${q.exp}</i></p>
             </div>
         `;
     });
 }
 
-// Start
-initQuiz();
+function changeQuestion(n) {
+    const data = quizData[currentMonth];
+    if(qIndex + n >= 0 && qIndex + n < data.length) {
+        qIndex += n;
+        loadQuestion();
+    }
+}
+
+// Initial Call
+loadMonths();
+startQuiz();
