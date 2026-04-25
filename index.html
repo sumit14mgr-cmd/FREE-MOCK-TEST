@@ -3,56 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FREE MOCK TEST - Current Affairs</title>
+    <title>FREE MOCK TEST - Professional UI</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <header>
         <h1>FREE MOCK TEST</h1>
-        <div class="ad-container">
-            <p>Adsense Banner Space</p>
+        <div class="ad-banner">
+            <p>Google Adsense Banner Area</p>
         </div>
     </header>
 
-    <div class="month-container">
-        <select id="month-selector" onchange="changeMonth()">
-            <option value="jan_2026">January 2026</option>
-            <option value="feb_2026">February 2026</option>
-            </select>
-        
-        <div class="settings">
+    <div class="container">
+        <div class="main-tabs">
+            <button class="tab-btn active">Current Affairs</button>
+            <button class="tab-btn" disabled>History (Coming Soon)</button>
+        </div>
+
+        <div class="sub-tab-wrapper">
+            <div class="sub-tabs" id="month-list">
+                </div>
+        </div>
+
+        <div class="neg-marking-ui">
             <label>Negative Marking: </label>
-            <input type="number" id="neg-mark" value="0.25" step="0.05" min="0">
+            <input type="number" id="negMark" value="0.25" step="0.05">
         </div>
+
+        <div id="quiz-box">
+            <div class="quiz-info">
+                <span id="q-status">Question 1/10</span>
+                <span id="q-month-tag">January 2026</span>
+            </div>
+            <div id="question-text">Select a month to start the quiz.</div>
+            <div id="options-list"></div>
+
+            <div class="nav-controls">
+                <button id="prevBtn" onclick="changeQuestion(-1)">Previous</button>
+                <button id="skipBtn" onclick="changeQuestion(1)">Skip</button>
+                <button id="nextBtn" onclick="changeQuestion(1)">Next</button>
+            </div>
+            <button id="finishBtn" class="hide" onclick="calculateResult()">Finish Test</button>
+        </div>
+
+        <div id="result-box" class="hide"></div>
+        <div id="solution-box" class="hide"></div>
     </div>
-
-    <main id="quiz-app">
-        <div id="question-area">
-            <div id="q-number">Question 1/10</div>
-            <div id="q-text">Loading question...</div>
-            <div id="options"></div>
-            
-            <div class="controls">
-                <button onclick="prevQuestion()" id="prev-btn">Previous</button>
-                <button onclick="skipQuestion()" id="skip-btn">Skip</button>
-                <button onclick="nextQuestion()" id="next-btn">Next</button>
-            </div>
-            <button id="submit-quiz" onclick="showResult()" style="display:none;">Submit Quiz</button>
-        </div>
-
-        <div id="result-screen" style="display:none;">
-            <h2>Your Scorecard</h2>
-            <div id="score-display"></div>
-            <div id="analysis-box"></div>
-            <div class="result-buttons">
-                <button onclick="viewSolutions()">View Solutions</button>
-                <button onclick="reattempt()">Re-attempt</button>
-            </div>
-        </div>
-
-        <div id="solutions-area" style="display:none;"></div>
-    </main>
 
     <script src="script.js"></script>
 </body>
