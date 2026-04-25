@@ -2,7 +2,7 @@
 const database = {
     "Current Affairs": {
         "January 2026": {
-            "Set 1": [
+            "Bihar Special": [
                 { q: "Bihar special: Question 1?", a: ["Ans A", "Ans B", "Ans C", "Ans D"], c: 2, exp: "Exp 1" },
                 { q: "Jan Set 1: Question 2?", a: ["X", "Y", "Z", "W"], c: 0, exp: "Exp 2" }
             ],
