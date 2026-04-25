@@ -18,13 +18,10 @@
             <h2 class="section-title">Select Subject</h2>
             <div class="category-grid">
                 <button class="card" onclick="showMonthlyView()">
-                    <span class="icon">📰</span>
+                    <span class="icon">📅</span>
                     <span>Current Affairs</span>
                 </button>
-                <button class="card disabled">
-                    <span class="icon">📜</span>
-                    <span>History (Coming Soon)</span>
-                </button>
+                <button class="card disabled"><span>History</span></button>
             </div>
         </div>
 
@@ -36,46 +33,46 @@
 
         <div id="set-view" class="view hide">
             <button class="back-btn" onclick="showView('monthly-view')">← Back</button>
-            <h2 id="month-name-title" class="section-title">Month Name</h2>
+            <h2 id="month-name-title" class="section-title">Month</h2>
             <div id="set-list" class="set-container"></div>
         </div>
 
         <div id="quiz-view" class="view hide">
-            <div class="quiz-status">
+            <div class="quiz-header">
                 <span id="q-count">Question 1/10</span>
-                <div class="neg-input">
-                    Neg: <input type="number" id="negMark" value="0.25" step="0.05">
-                </div>
+                <div class="neg-box">Neg: <input type="number" id="negMark" value="0.25" step="0.05"></div>
             </div>
             <div class="quiz-card">
-                <div id="question-text">Question here?</div>
+                <div id="question-text">Loading...</div>
                 <div id="options-list"></div>
-                <div class="quiz-nav">
+                <div class="nav-controls">
                     <button onclick="changeQuestion(-1)">Previous</button>
-                    <button id="skipBtn" onclick="changeQuestion(1)">Skip</button>
+                    <button onclick="changeQuestion(1)">Next / Skip</button>
                 </div>
-                <button id="finishBtn" class="hide finish-btn" onclick="showResult()">Submit Test</button>
+                <button id="submitBtn" class="hide submit-btn" onclick="showResult()">Submit Quiz</button>
             </div>
         </div>
 
         <div id="result-view" class="view hide">
-            <h2 class="section-title">Your Scorecard</h2>
+            <h2 class="section-title">Performance Analysis</h2>
             <div class="score-card">
                 <div class="score-item">Total: <span id="res-total"></span></div>
                 <div class="score-item">Correct: <span id="res-correct" style="color:green"></span></div>
                 <div class="score-item">Wrong: <span id="res-wrong" style="color:red"></span></div>
-                <div class="score-item highlight">Final Score: <span id="res-score"></span></div>
+                <div class="score-item highlight">Score: <span id="res-score"></span></div>
             </div>
-            <div id="weak-analysis"></div>
-            <div class="result-actions">
-                <button class="sol-btn" onclick="showSolutions()">View Solution</button>
+            
+            <div id="analysis-section" class="analysis-box">
+                </div>
+
+            <div class="result-btns">
+                <button class="sol-btn" onclick="showSolutions()">View Solutions & Explanations</button>
                 <button class="re-btn" onclick="reattempt()">Re-attempt</button>
             </div>
         </div>
 
         <div id="solution-view" class="view hide">
             <button class="back-btn" onclick="showView('result-view')">← Back to Score</button>
-            <h2 class="section-title">Detailed Analysis</h2>
             <div id="solution-list"></div>
         </div>
     </div>
