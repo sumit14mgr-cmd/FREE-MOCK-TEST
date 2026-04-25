@@ -3,52 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FREE MOCK TEST - Professional UI</title>
+    <title>FREE MOCK TEST - Professional</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <header>
-        <h1>FREE MOCK TEST</h1>
-        <div class="ad-banner">
-            <p>Google Adsense Banner Area</p>
-        </div>
+        <h1 onclick="showCategoryView()" style="cursor:pointer">FREE MOCK TEST</h1>
+        <div class="ad-banner">Adsense Banner Area</div>
     </header>
 
     <div class="container">
-        <div class="main-tabs">
-            <button class="tab-btn active">Current Affairs</button>
-            <button class="tab-btn" disabled>History (Coming Soon)</button>
+        <div id="category-view" class="view">
+            <h2>Select Subject</h2>
+            <div class="grid-menu">
+                <button class="menu-card" onclick="showMonthlyView('Current Affairs')">
+                    <span class="icon">📅</span> Current Affairs
+                </button>
+                <button class="menu-card" disabled>
+                    <span class="icon">Coming Soon</span> History
+                </button>
+            </div>
         </div>
 
-        <div class="sub-tab-wrapper">
-            <div class="sub-tabs" id="month-list">
-                </div>
+        <div id="monthly-view" class="view hide">
+            <button class="back-btn" onclick="showCategoryView()">← Back</button>
+            <h2 id="selected-subject">Monthly Current Affairs</h2>
+            <div class="month-grid" id="month-list"></div>
         </div>
 
-        <div class="neg-marking-ui">
-            <label>Negative Marking: </label>
-            <input type="number" id="negMark" value="0.25" step="0.05">
+        <div id="set-view" class="view hide">
+            <button class="back-btn" onclick="showMonthlyView()">← Back to Months</button>
+            <h2 id="selected-month-title">January 2026</h2>
+            <div class="set-list" id="set-list-container"></div>
         </div>
 
-        <div id="quiz-box">
-            <div class="quiz-info">
+        <div id="quiz-view" class="view hide">
+            <div class="quiz-header">
                 <span id="q-status">Question 1/10</span>
-                <span id="q-month-tag">January 2026</span>
+                <div class="neg-ui">
+                    Neg: <input type="number" id="negMark" value="0.25" step="0.05">
+                </div>
             </div>
-            <div id="question-text">Select a month to start the quiz.</div>
-            <div id="options-list"></div>
-
-            <div class="nav-controls">
-                <button id="prevBtn" onclick="changeQuestion(-1)">Previous</button>
-                <button id="skipBtn" onclick="changeQuestion(1)">Skip</button>
-                <button id="nextBtn" onclick="changeQuestion(1)">Next</button>
+            
+            <div id="quiz-box">
+                <div id="question-text">Question loading...</div>
+                <div id="options-list"></div>
+                <div class="nav-controls">
+                    <button onclick="changeQuestion(-1)">Previous</button>
+                    <button onclick="changeQuestion(1)">Next</button>
+                </div>
+                <button id="finishBtn" class="hide" onclick="calculateResult()">Finish Test</button>
             </div>
-            <button id="finishBtn" class="hide" onclick="calculateResult()">Finish Test</button>
         </div>
 
-        <div id="result-box" class="hide"></div>
-        <div id="solution-box" class="hide"></div>
+        <div id="result-box" class="view hide"></div>
+        <div id="solution-box" class="view hide"></div>
     </div>
 
     <script src="script.js"></script>
