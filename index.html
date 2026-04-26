@@ -3,92 +3,124 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BPSC EXAM PORTAL</title>
+    <title>BPSC Current Affairs Portal</title>
     <link rel="stylesheet" href="style.css">
-</head>
+    </head>
 <body>
 
     <div class="ad-banner" id="top-ad">
-        HEADER AD BANNER (728x90)
+        <small>Advertisement</small>
     </div>
 
-    <header>
-        <h1 onclick="location.reload()" style="cursor:pointer">FREE MOCK TEST</h1>
-    </header>
-
     <div class="container">
-        <div id="category-view" class="view active">
-            <h2 class="section-title">Select Subject</h2>
-            <div class="category-grid">
-                <button class="card" onclick="showSetView()">📅<br>Bihar Current Affairs</button>
-                <button class="card" style="opacity:0.5" disabled>📜<br>History (Coming Soon)</button>
+        <div id="home-view" class="view active">
+            <h1 class="main-title">BPSC EXAM PORTAL</h1>
+            <div class="menu-grid">
+                <div class="menu-card" onclick="showSetView()">
+                    <span class="icon">📰</span>
+                    <h3>Bihar Current Affairs</h3>
+                    <p>January 2026 Special</p>
+                </div>
+                <div class="menu-card" style="opacity: 0.6;">
+                    <span class="icon">📚</span>
+                    <h3>GS Mock Test</h3>
+                    <p>Coming Soon</p>
+                </div>
             </div>
         </div>
 
         <div id="set-view" class="view">
-            <button class="back-btn" onclick="showView('category-view')">← Back</button>
-            <h2 class="section-title">January 2026 Sets</h2>
-            <div id="set-list">
-                <button class="set-btn" onclick="prepareSettings()">Bihar Special Test 1</button>
+            <button class="back-btn" onclick="showView('home-view')">← Back</button>
+            <h2 class="section-title">Select Question Set</h2>
+            <div class="set-list">
+                <div class="set-card" onclick="prepareSettings('bihar_special_1')">
+                    <div class="set-info">
+                        <h3>Bihar Special - Set 1</h3>
+                        <p>20 Questions | Bilingual</p>
+                    </div>
+                    <span class="arrow">→</span>
+                </div>
+                
+                <div class="set-card" onclick="prepareSettings('bihar_special_2')">
+                    <div class="set-info">
+                        <h3>Bihar Special - Set 2</h3>
+                        <p>20 Questions | Bilingual</p>
+                    </div>
+                    <span class="arrow">→</span>
+                </div>
             </div>
         </div>
 
         <div id="settings-view" class="view">
-            <button class="back-btn" onclick="showView('set-view')">← Back</button>
-            <div class="settings-card">
-                <h3>Test Settings</h3>
-                <div class="input-group">
-                    <label>Negative Marking (e.g. 0.25):</label>
-                    <input type="number" id="negMarkInput" value="0.25" step="0.01">
+            <button class="back-btn" onclick="showSetView()">← Back</button>
+            <div class="settings-box">
+                <h2>Quiz Settings</h2>
+                <div class="setting-item">
+                    <label>Time Limit (Minutes):</label>
+                    <input type="number" id="timeLimitInput" value="10" min="1">
                 </div>
-                <div class="input-group">
-                    <label>Test Time (Minutes):</label>
-                    <input type="number" id="timeLimitInput" value="15">
+                <div class="setting-item">
+                    <label>Negative Marking (per wrong):</label>
+                    <input type="number" id="negMarkInput" value="0.33" step="0.01">
                 </div>
-                <button class="btn-block" style="background:#2e7d32" onclick="startQuizNow()">START TEST</button>
+                <button class="start-btn" onclick="startQuizNow()">Start Quiz Now</button>
             </div>
         </div>
 
         <div id="quiz-view" class="view">
-            <div class="timer-bar" id="timer-display">Time: 15:00</div>
-            <div class="quiz-card">
-                <span id="q-count" style="color:#0288d1; font-weight:bold;"></span>
-                <div id="question-area" style="margin-top:10px;"></div>
-                <div id="options-list"></div>
-                
-                <div class="ad-banner" style="margin-top:15px; height:60px; line-height:60px;">IN-QUIZ AD</div>
+            <div class="quiz-header">
+                <span id="timer-display">Time: 00:00</span>
+                <span id="q-count">Question 1/20</span>
+            </div>
+            
+            <div id="question-area"></div>
+            <div id="options-list"></div>
 
-                <div style="display:flex; justify-content:space-between; margin-top:20px;">
-                    <button class="back-btn" id="prevBtn" onclick="changeQuestion(-1)">← Previous</button>
-                    <button class="back-btn" id="nextBtn" onclick="changeQuestion(1)">Next / Skip →</button>
-                </div>
-                <button id="finalSubmitBtn" class="btn-block" style="display:none; background:#000;" onclick="finishQuiz()">Final Submit</button>
+            <div class="quiz-footer">
+                <button class="nav-btn" onclick="changeQuestion(-1)">Previous</button>
+                <button class="nav-btn" id="nextBtn" onclick="changeQuestion(1)">Next</button>
+                <button class="submit-btn" id="finalSubmitBtn" style="display:none;" onclick="finishQuiz()">Submit Test</button>
             </div>
         </div>
 
         <div id="result-view" class="view">
-            <h2 class="section-title">Performance Report</h2>
-            <div class="score-card">
-                <div class="score-item">Total: <span id="res-total"></span></div>
-                <div class="score-item">Correct: <span id="res-correct" style="color:green"></span></div>
-                <div class="score-item">Wrong: <span id="res-wrong" style="color:red"></span></div>
-                <div class="score-item" style="grid-column: span 2; background:#fff9c4;">Final Score: <span id="res-score"></span></div>
+            <div class="result-card">
+                <h2>Test Result</h2>
+                <div class="score-grid">
+                    <div class="score-item">Total: <span id="res-total">0</span></div>
+                    <div class="score-item" style="color: green;">Correct: <span id="res-correct">0</span></div>
+                    <div class="score-item" style="color: red;">Wrong: <span id="res-wrong">0</span></div>
+                </div>
+                <div class="final-score">Final Score: <span id="res-score">0</span></div>
+                
+                <div id="analysis-box" class="analysis-box"></div>
+
+                <div class="result-actions">
+                    <button class="action-btn" onclick="showSolutions('all')">View All Solutions</button>
+                    <button class="action-btn restart" onclick="location.reload()">Home Page</button>
+                </div>
             </div>
-            <div id="analysis-box" class="analysis-box"></div>
-            <button class="btn-block" style="background:#0288d1" onclick="showSolutions('all')">VIEW ALL SOLUTIONS</button>
-            <button class="btn-block" style="background:#666" onclick="location.reload()">TRY ANOTHER TEST</button>
         </div>
 
         <div id="solution-view" class="view">
-            <button class="back-btn" onclick="showView('result-view')">← Back to Score</button>
+            <button class="back-btn" onclick="showView('result-view')">← Back to Result</button>
+            <h2>Explanations</h2>
             <div id="solution-list"></div>
         </div>
+
     </div>
 
-    <div class="footer-ad">
-        <div class="ad-banner" style="margin:0 auto; width:100%;">
-            STICKY FOOTER BANNER AD
+    <footer class="site-footer">
+        <div class="footer-links">
+            <a href="about.html">About Us</a> |
+            <a href="privacy.html">Privacy Policy</a> |
+            <a href="contact.html">Contact Us</a>
         </div>
+        <p>&copy; 2026 BPSC Exam Portal. Dedicated to Excellence.</p>
+    </footer>
+
+    <div class="footer-ad">
+        <small>Sponsored Ad</small>
     </div>
 
     <script src="script.js"></script>
