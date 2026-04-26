@@ -1,11 +1,13 @@
-// DATABASE: Isme Set 1 aur Set 2 dono ka poora data hai
+// ==========================================
+// 1. DATABASE (Set 1 & Set 2 Complete)
+// ==========================================
 const database = {
     "jan_2026": {
         "bihar_special_1": [
             { qh: "विंग्स इंडिया 2026 के दौरान बिहार को किस श्रेणी में राष्ट्रीय पुरस्कार से सम्मानित किया गया?", qe: "In which category was Bihar honored with a national award during Wings India 2026?", ah: ["क्षेत्रीय संपर्क योजना (RCS) - उड़ान", "कृषि विकास", "डिजिटल शिक्षा", "पर्यटन"], ae: ["Regional Connectivity Scheme (RCS) - UDAN", "Agricultural Development", "Digital Education", "Tourism"], c: 0, topic: "Awards & Honors", e: "Bihar received this award jointly with UP in 'Most Active State' category." },
             { qh: "कैथी लिपि के ऐतिहासिक दस्तावेजों को देवनागरी में रूपांतरित करने के लिए कितने विशेषज्ञों का पैनल गठित किया गया है?", qe: "How many experts' panel has been formed to convert historical documents of Kaithi script into Devanagari?", ah: ["15", "29", "40", "50"], ae: ["15", "29", "40", "50"], c: 1, topic: "Art & Culture", e: "Revenue and Land Reforms Department formed a panel of 29 trained translators." },
             { qh: "1 जनवरी 2026 को बिहार बटालियन की कौन सी स्थापना वर्षगांठ मनाई गई?", qe: "Which raising day anniversary of Bihar Battalion was celebrated on January 1, 2026?", ah: ["8वीं की 50वीं", "12वीं की 40वीं", "8वीं की 60वीं और 12वीं की 49वीं", "दोनों की 50वीं"], ae: ["50th of 8th", "40th of 12th", "60th of 8th and 49th of 12th", "50th of both"], c: 2, topic: "Defense", e: "8th Bihar Battalion was raised in 1965 and 12th in 1976." },
-            { qh: "पटना उच्च न्यायालय के 47वें मुख्य न्यायाधीश के रूप में किसने शपथ ली?", qe: "Who took oath as the 47th Chief Justice of Patna High Court?", ah: ["न्यायमूर्ति के. विनोद चंद्रन", "न्यायमूर्ति संगम कुमार साहू", "न्यायमूर्ति प्रवीण कुमार", "न्यायमूर्ति ऋतेश कुमार"], ae: ["Justice K. Vinod Chandran", "Justice Sangam Kumar Sahu", "Justice Praveen Kumar", "Justice Ritesh Kumar"], c: 1, topic: "Appointment", e: "Justice Sangam Kumar Sahu took oath on January 7, 2026." },
+            { qh: "पटना उच्च न्यायालय के 47वें मुख्य न्यायाधीश के रूप में किसने शपथ ली?", qe: "Who took oath as the 47th Chief Justice of Patna High Court?", ah: ["न्यायमूर्ति के. विनोद चंद्रन", "न्यायमूर्ति संगम कुमार साहू", "न्यायमूर्ति प्रवीण कुमार", "न्यायमूर्ति ऋतेश कुमार"], ae: ["Justice K. Vinod Chandraran", "Justice Sangam Kumar Sahu", "Justice Praveen Kumar", "Justice Ritesh Kumar"], c: 1, topic: "Appointment", e: "Justice Sangam Kumar Sahu took oath on January 7, 2026." },
             { qh: "आईआईटी पटना में बन रहा आधुनिक अनुसंधान पार्क किस मॉडल पर आधारित है?", qe: "The modern research park being built at IIT Patna is based on which model?", ah: ["आईआईटी दिल्ली", "आईआईटी बॉम्बे", "आईआईटी मद्रास", "आईआईटी कानपुर"], ae: ["IIT Delhi", "IIT Bombay", "IIT Madras", "IIT Kanpur"], c: 2, topic: "Science & Tech", e: "This park is being developed on the model of IIT Madras." },
             { qh: "13 जनवरी 2026 को हुई मंत्रिपरिषद की बैठक में कुल कितने प्रस्तावों को मंजूरी दी गई?", qe: "How many proposals were approved in the cabinet meeting held on January 13, 2026?", ah: ["32", "43", "50", "25"], ae: ["32", "43", "50", "25"], c: 1, topic: "Governance", e: "43 proposals were approved under the chairmanship of CM Nitish Kumar." },
             { qh: "सोन नदी जल-बंटवारे विवाद के तहत झारखंड को कितना जल आवंटित किया जाएगा?", qe: "How much water will be allocated to Jharkhand under the Son River water-sharing dispute?", ah: ["7.75 MAF", "5.75 MAF", "2.00 MAF", "1.50 MAF"], ae: ["7.75 Million Acre-Feet", "5.75 Million Acre-Feet", "2.00 Million Acre-Feet", "1.50 Million Acre-Feet"], c: 2, topic: "Geography/Polity", e: "Bihar will get 5.75 and Jharkhand 2.00 million acre-feet." },
@@ -48,18 +50,41 @@ const database = {
     }
 };
 
-let currentQuestions = [];
-let qIndex = 0, userAns = {}, timer, timeLeft = 0;
+// ==========================================
+// 2. GLOBAL VARIABLES & LOGIC
+// ==========================================
+let userData = { name: "", district: "", contact: "" };
+let currentQuestions = [], qIndex = 0, userAns = {}, timer, timeLeft = 0;
+let currentSetName = "";
 
+// View Switching Function
 function showView(id) {
     document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
     document.getElementById(id).classList.add('active');
     window.scrollTo(0,0);
 }
 
+// 3. REGISTRATION LOGIC
+function saveUserAndProceed() {
+    const name = document.getElementById('studentName').value.trim();
+    const dist = document.getElementById('studentDistrict').value;
+    const contact = document.getElementById('studentContact').value.trim();
+
+    if (!name || !dist) {
+        alert("Bhai, Naam aur District toh batana hi hoga!");
+        return;
+    }
+
+    userData = { name, district: dist, contact: contact || "N/A" };
+    document.getElementById('welcome-msg').innerText = `Namaste, ${name}!`;
+    showView('home-view');
+}
+
+// 4. QUIZ CORE FUNCTIONS
 function showSetView() { showView('set-view'); }
 
 function prepareSettings(setName) {
+    currentSetName = setName;
     currentQuestions = database["jan_2026"][setName]; 
     showView('settings-view');
 }
@@ -83,7 +108,7 @@ function startTimer() {
 
 function loadQuestion() {
     const q = currentQuestions[qIndex];
-    document.getElementById('q-count').innerText = `Question ${qIndex + 1} / ${currentQuestions.length}`;
+    document.getElementById('q-count').innerText = `Q ${qIndex + 1} / ${currentQuestions.length}`;
     document.getElementById('question-area').innerHTML = `
         <div class="q-text"><b>H:</b> ${q.qh}</div>
         <div class="q-text" style="color:#666; font-size:16px;"><b>E:</b> ${q.qe}</div>
@@ -100,8 +125,15 @@ function loadQuestion() {
 }
 
 function saveAns(i) { userAns[qIndex] = i; loadQuestion(); }
-function changeQuestion(n) { if(qIndex + n >= 0 && qIndex + n < currentQuestions.length) { qIndex += n; loadQuestion(); } }
 
+function changeQuestion(n) { 
+    if(qIndex + n >= 0 && qIndex + n < currentQuestions.length) { 
+        qIndex += n; 
+        loadQuestion(); 
+    } 
+}
+
+// 5. RESULT & DATA SYNC
 function finishQuiz() {
     clearInterval(timer);
     showView('result-view');
@@ -118,18 +150,44 @@ function finishQuiz() {
         }
     });
 
-    document.getElementById('res-total').innerText = currentQuestions.length;
+    let finalScore = (correct - (wrong * neg)).toFixed(2);
+    document.getElementById('res-score').innerText = finalScore;
     document.getElementById('res-correct').innerText = correct;
     document.getElementById('res-wrong').innerText = wrong;
-    document.getElementById('res-score').innerText = (correct - (wrong * neg)).toFixed(2);
 
-    let aHtml = "<h3>Your Weak Sections:</h3><p style='color:#c62828; font-weight:bold;'>";
-    aHtml += Array.from(weakTopics).join(", ") || "None";
+    let aHtml = "<h3>Weak Sections:</h3><p style='color:#c62828; font-weight:bold;'>";
+    aHtml += Array.from(weakTopics).join(", ") || "None (Sab sahi hai!)";
     aHtml += "</p><hr><h4>Review Mistakes:</h4>";
     wrongIdxs.forEach(idx => { aHtml += `<span class="q-link" onclick="showSolutions(${idx})">Q${idx+1}</span>`; });
-    document.getElementById('analysis-box').innerHTML = wrongIdxs.length ? aHtml : "🌟 Perfect Score!";
+    document.getElementById('analysis-box').innerHTML = wrongIdxs.length ? aHtml : "🌟 Shandaar Performance! Saare concepts clear hain.";
+
+    // Data Sheet mein bhejna
+    sendDataToSheet(finalScore, correct, wrong);
 }
 
+function sendDataToSheet(score, c, w) {
+    const scriptURL = "Aapki_Google_App_Script_URL_Yahan_Dalein"; // APNA URL YAHAN DALEIN
+    
+    const data = {
+        name: userData.name,
+        district: userData.district,
+        contact: userData.contact,
+        quizName: currentSetName,
+        score: score,
+        correct: c,
+        wrong: w,
+        date: new Date().toLocaleString()
+    };
+
+    fetch(scriptURL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+    }).catch(err => console.log("Sheet error:", err));
+}
+
+// 6. SOLUTIONS VIEW
 function showSolutions(mode) {
     showView('solution-view');
     let target = (mode === 'all') ? currentQuestions.map((_, i) => i) : [mode];
@@ -141,6 +199,12 @@ function showSolutions(mode) {
             else if(oi === u) cls += " wrong-pick";
             return `<div class="${cls}"><b>${opt}</b> (${q.ae[oi]})</div>`;
         }).join('');
-        return `<div class="sol-card"><span style="background:#eee; padding:2px 8px; border-radius:4px; font-size:12px;">Topic: ${q.topic}</span><p><b>Q${i+1}: ${q.qh}</b></p><div>${optsHtml}</div><div class="exp-box"><b>Explanation:</b> ${q.e}</div></div>`;
+        return `
+        <div class="sol-card">
+            <span class="topic-tag">Topic: ${q.topic}</span>
+            <p><b>Q${i+1}: ${q.qh}</b></p>
+            <div>${optsHtml}</div>
+            <div class="exp-box"><b>Vyakhyan:</b> ${q.e}</div>
+        </div>`;
     }).join('');
 }
