@@ -1,23 +1,257 @@
-:root { --primary: #1a237e; --accent: #0288d1; --bg: #f4f7f6; }
-body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; padding: 0; }
-header { background: linear-gradient(135deg, var(--primary), var(--accent)); color: white; padding: 20px; text-align: center; }
-.ad-banner { background: rgba(255,255,255,0.1); border: 1px dashed white; max-width: 728px; height: 90px; margin: 10px auto; display: flex; align-items: center; justify-content: center; }
-.container { max-width: 600px; margin: 20px auto; padding: 15px; }
-.view { animation: fadeIn 0.3s ease; }
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-.hide { display: none !important; }
-.section-title { text-align: center; color: var(--primary); margin-bottom: 20px; }
-.category-grid, .month-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-.card, .month-btn { background: white; border: none; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); cursor: pointer; font-weight: bold; }
-.set-btn { width: 100%; padding: 18px; margin-bottom: 12px; border: none; background: #e3f2fd; color: #0d47a1; border-left: 6px solid #0d47a1; border-radius: 8px; font-weight: bold; cursor: pointer; text-align: left; font-size: 16px; }
-.quiz-card { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
-.option { padding: 15px; border: 2px solid #eee; border-radius: 10px; margin-top: 10px; cursor: pointer; transition: 0.2s; }
-.option.selected { background: #bbdefb; border-color: #1976d2; font-weight: bold; }
-.score-card { background: white; padding: 20px; border-radius: 12px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; text-align: center; }
-.highlight { grid-column: span 2; background: #fff9c4; font-size: 1.2rem; padding: 15px; border-radius: 10px; }
-.analysis-box { margin-top: 20px; padding: 15px; background: #fff3e0; border-radius: 10px; border: 1px solid #ffe0b2; }
-.sol-card { background: white; padding: 15px; border-radius: 10px; margin-bottom: 15px; border-left: 5px solid var(--accent); box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-.exp-box { background: #f1f8e9; padding: 10px; margin-top: 10px; font-size: 14px; border-radius: 5px; color: #33691e; line-height: 1.4; }
-.nav-controls { display: flex; justify-content: space-between; margin-top: 20px; }
-.submit-btn { width: 100%; margin-top: 15px; background: #2e7d32; color: white; padding: 15px; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold; }
-.back-btn { background: #666; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; margin-bottom: 10px; }
+:root {
+    --primary: #1a237e;
+    --accent: #0288d1;
+    --bg: #f4f7f6;
+    --success: #2e7d32;
+    --danger: #c62828;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: var(--bg);
+    margin: 0;
+    color: #333;
+    padding-bottom: 120px; /* Space for sticky footer ad */
+}
+
+/* Ad Banners Layout */
+.ad-banner {
+    background: #fff;
+    border: 1px dashed #bbb;
+    margin: 10px auto;
+    text-align: center;
+    line-height: 90px;
+    color: #999;
+    max-width: 728px;
+    height: 90px;
+    font-size: 14px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+header {
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    color: white;
+    padding: 15px;
+    text-align: center;
+}
+
+.container {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 15px;
+}
+
+.view {
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+
+.view.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.section-title {
+    text-align: center;
+    color: var(--primary);
+    margin: 20px 0;
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 10px;
+}
+
+/* Grids & Cards */
+.category-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.card {
+    background: white;
+    border: none;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+    transition: 0.2s;
+}
+
+.set-btn {
+    width: 100%;
+    padding: 20px;
+    margin-bottom: 12px;
+    border: none;
+    background: white;
+    border-left: 8px solid var(--primary);
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: left;
+}
+
+.settings-card {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.input-group input {
+    width: 95%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+
+/* Quiz Styling */
+.timer-bar {
+    background: white;
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--danger);
+    margin-bottom: 15px;
+    border: 2px solid var(--danger);
+    position: sticky;
+    top: 5px;
+    z-index: 100;
+}
+
+.quiz-card {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
+
+.q-text {
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 1.5;
+}
+
+.option {
+    padding: 15px;
+    border: 2px solid #eee;
+    border-radius: 10px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.option.selected {
+    background: #e3f2fd;
+    border-color: var(--accent);
+}
+
+/* Score & Solution */
+.score-card {
+    background: white;
+    padding: 15px;
+    border-radius: 12px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    text-align: center;
+}
+
+.score-item {
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+.analysis-box {
+    margin-top: 20px;
+    padding: 15px;
+    background: #fff3e0;
+    border-radius: 10px;
+    border-left: 6px solid #ff9800;
+}
+
+.q-link {
+    display: inline-block;
+    background: var(--danger);
+    color: white;
+    padding: 5px 12px;
+    border-radius: 5px;
+    margin: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.sol-card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    border-top: 6px solid #ddd;
+}
+
+.sol-option {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    margin-top: 8px;
+}
+
+.sol-option.wrong-pick { background: #ffebee; border-color: var(--danger); color: var(--danger); font-weight: bold; }
+.sol-option.correct-pick { background: #e8f5e9; border-color: var(--success); color: var(--success); font-weight: bold; }
+
+.exp-box {
+    background: #f1f8e9;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 15px;
+    font-size: 15px;
+    color: #33691e;
+}
+
+.btn-block {
+    width: 100%;
+    padding: 18px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    margin-top: 15px;
+}
+
+.back-btn {
+    background: #eee;
+    color: #333;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.footer-ad {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #fff;
+    border-top: 1px solid #ddd;
+    z-index: 999;
+}
