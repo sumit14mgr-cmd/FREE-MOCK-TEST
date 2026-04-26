@@ -3,104 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BPSC MOCK TEST PORTAL</title>
-    <style>
-        :root { --primary: #1a237e; --accent: #0288d1; --bg: #f4f7f6; --success: #2e7d32; --danger: #c62828; }
-        body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg); margin: 0; color: #333; padding-bottom: 100px; }
-        
-        /* Ad Banners */
-        .ad-banner { background: #eee; border: 1px dashed #bbb; margin: 10px auto; text-align: center; line-height: 90px; color: #777; max-width: 728px; height: 90px; font-size: 14px; overflow: hidden; }
-        
-        header { background: linear-gradient(135deg, var(--primary), var(--accent)); color: white; padding: 15px; text-align: center; }
-        .container { max-width: 700px; margin: 0 auto; padding: 15px; }
-        
-        .view { display: none; animation: fadeIn 0.3s ease; }
-        .view.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        
-        .section-title { text-align: center; color: var(--primary); margin: 15px 0; border-bottom: 2px solid var(--accent); padding-bottom: 10px; }
-        
-        /* Grids & Cards */
-        .category-grid, .month-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .card, .month-btn { background: white; border: none; padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); cursor: pointer; font-weight: bold; }
-        .set-btn { width: 100%; padding: 18px; margin-bottom: 12px; border: none; background: white; border-left: 8px solid var(--primary); border-radius: 8px; font-weight: bold; cursor: pointer; text-align: left; }
-
-        /* Quiz UI */
-        .timer-bar { background: white; padding: 10px; border-radius: 8px; text-align: center; font-size: 18px; font-weight: bold; color: var(--danger); margin-bottom: 15px; border: 2px solid var(--danger); position: sticky; top: 5px; z-index: 100; }
-        .quiz-card { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.08); }
-        .q-text { font-size: 17px; font-weight: bold; margin-bottom: 12px; }
-        .option { padding: 12px; border: 2px solid #eee; border-radius: 10px; margin-top: 8px; cursor: pointer; }
-        .option.selected { background: #e3f2fd; border-color: var(--accent); }
-        
-        /* Analysis & Solutions */
-        .score-card { background: white; padding: 15px; border-radius: 12px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; text-align: center; }
-        .score-item { padding: 12px; background: #f8f9fa; border-radius: 8px; font-weight: bold; }
-        .analysis-box { margin-top: 15px; padding: 15px; background: #fff3e0; border-radius: 10px; border-left: 5px solid #ff9800; }
-        .q-link { display: inline-block; background: var(--danger); color: white; padding: 4px 10px; border-radius: 4px; margin: 3px; cursor: pointer; font-size: 13px; }
-
-        .sol-card { background: white; padding: 20px; border-radius: 12px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border-top: 5px solid #ddd; }
-        .sol-option { padding: 10px; border: 1px solid #ddd; border-radius: 6px; margin-top: 6px; font-size: 14px; }
-        .sol-option.wrong-pick { background: #ffebee; border-color: var(--danger); color: var(--danger); font-weight: bold; }
-        .sol-option.correct-pick { background: #e8f5e9; border-color: var(--success); color: var(--success); font-weight: bold; }
-        .exp-content { background: #f1f8e9; padding: 12px; border-radius: 6px; margin-top: 12px; font-size: 14px; color: #33691e; border: 1px solid #dcedc8; }
-
-        .btn-block { width: 100%; padding: 16px; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold; color: white; margin-top: 15px; }
-        .back-btn { background: #666; color: white; border: none; padding: 10px 18px; border-radius: 6px; cursor: pointer; margin-bottom: 10px; }
-        
-        /* Fixed Footer Ad */
-        .footer-ad { position: fixed; bottom: 0; left: 0; width: 100%; background: #fff; border-top: 1px solid #ddd; z-index: 999; }
-    </style>
+    <title>BPSC EXAM PORTAL</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div class="ad-banner">Header Ad Banner (728x90)</div>
+    <div class="ad-banner" id="top-ad">
+        HEADER AD BANNER (728x90)
+    </div>
 
-    <header><h1 onclick="location.reload()" style="cursor:pointer">FREE MOCK TEST</h1></header>
+    <header>
+        <h1 onclick="location.reload()" style="cursor:pointer">FREE MOCK TEST</h1>
+    </header>
 
     <div class="container">
         <div id="category-view" class="view active">
             <h2 class="section-title">Select Subject</h2>
             <div class="category-grid">
-                <button class="card" onclick="showMonthlyView()">📅<br>Current Affairs</button>
-                <button class="card" style="opacity:0.5" disabled>📜<br>History</button>
+                <button class="card" onclick="showSetView()">📅<br>Bihar Current Affairs</button>
+                <button class="card" style="opacity:0.5" disabled>📜<br>History (Coming Soon)</button>
             </div>
         </div>
 
-        <div id="monthly-view" class="view">
-            <button class="back-btn" onclick="showView('category-view')">← Back</button>
-            <div id="month-list" class="month-grid"></div>
-        </div>
-
         <div id="set-view" class="view">
-            <button class="back-btn" onclick="showView('monthly-view')">← Back</button>
-            <h2 id="month-title" class="section-title">Month</h2>
-            <div id="set-list"></div>
+            <button class="back-btn" onclick="showView('category-view')">← Back</button>
+            <h2 class="section-title">January 2026 Sets</h2>
+            <div id="set-list">
+                <button class="set-btn" onclick="prepareSettings()">Bihar Special Test 1</button>
+            </div>
         </div>
 
         <div id="settings-view" class="view">
             <button class="back-btn" onclick="showView('set-view')">← Back</button>
-            <div style="background:white; padding:20px; border-radius:12px;">
-                <label>Negative Marking:</label><br>
-                <input type="number" id="negMarkInput" value="0.25" step="0.01" style="width:90%; padding:10px; margin:10px 0;"><br>
-                <label>Time (Minutes):</label><br>
-                <input type="number" id="timeLimitInput" value="10" style="width:90%; padding:10px; margin:10px 0;">
-                <button class="btn-block" style="background:var(--success)" onclick="startQuizNow()">START TEST</button>
+            <div class="settings-card">
+                <h3>Test Settings</h3>
+                <div class="input-group">
+                    <label>Negative Marking (e.g. 0.25):</label>
+                    <input type="number" id="negMarkInput" value="0.25" step="0.01">
+                </div>
+                <div class="input-group">
+                    <label>Test Time (Minutes):</label>
+                    <input type="number" id="timeLimitInput" value="15">
+                </div>
+                <button class="btn-block" style="background:#2e7d32" onclick="startQuizNow()">START TEST</button>
             </div>
         </div>
 
         <div id="quiz-view" class="view">
-            <div class="timer-bar" id="timer-display">Time: 10:00</div>
+            <div class="timer-bar" id="timer-display">Time: 15:00</div>
             <div class="quiz-card">
-                <span id="q-count" style="color:var(--accent); font-weight:bold;"></span>
+                <span id="q-count" style="color:#0288d1; font-weight:bold;"></span>
                 <div id="question-area" style="margin-top:10px;"></div>
                 <div id="options-list"></div>
+                
+                <div class="ad-banner" style="margin-top:15px; height:60px; line-height:60px;">IN-QUIZ AD</div>
+
                 <div style="display:flex; justify-content:space-between; margin-top:20px;">
                     <button class="back-btn" id="prevBtn" onclick="changeQuestion(-1)">← Previous</button>
                     <button class="back-btn" id="nextBtn" onclick="changeQuestion(1)">Next / Skip →</button>
                 </div>
-                <button id="finalSubmitBtn" class="btn-block" style="display:none; background:#000;" onclick="finishQuiz()">Submit Test</button>
+                <button id="finalSubmitBtn" class="btn-block" style="display:none; background:#000;" onclick="finishQuiz()">Final Submit</button>
             </div>
-            <div class="ad-banner" style="margin-top:20px;">Quiz Page Ad Banner</div>
         </div>
 
         <div id="result-view" class="view">
@@ -109,11 +72,11 @@
                 <div class="score-item">Total: <span id="res-total"></span></div>
                 <div class="score-item">Correct: <span id="res-correct" style="color:green"></span></div>
                 <div class="score-item">Wrong: <span id="res-wrong" style="color:red"></span></div>
-                <div class="score-item" style="grid-column: span 2; background:#fff9c4;">Score: <span id="res-score"></span></div>
+                <div class="score-item" style="grid-column: span 2; background:#fff9c4;">Final Score: <span id="res-score"></span></div>
             </div>
             <div id="analysis-box" class="analysis-box"></div>
-            <button class="btn-block" style="background:var(--accent)" onclick="showSolutions('all')">VIEW ALL SOLUTIONS</button>
-            <button class="btn-block" style="background:#666" onclick="location.reload()">HOME</button>
+            <button class="btn-block" style="background:#0288d1" onclick="showSolutions('all')">VIEW ALL SOLUTIONS</button>
+            <button class="btn-block" style="background:#666" onclick="location.reload()">TRY ANOTHER TEST</button>
         </div>
 
         <div id="solution-view" class="view">
@@ -123,119 +86,11 @@
     </div>
 
     <div class="footer-ad">
-        <div class="ad-banner" style="margin:0 auto;">Footer Ad Banner (Sticky)</div>
+        <div class="ad-banner" style="margin:0 auto; width:100%;">
+            STICKY FOOTER BANNER AD
+        </div>
     </div>
 
-    <script>
-        const database = {
-            "January 2026": {
-                "Bihar Special": [
-                    { qh: "बिहार का पहला तैरता हुआ सौर ऊर्जा संयंत्र कहाँ है?", qe: "Where is Bihar's first floating solar plant?", ah: ["पटना", "दरभंगा", "गया", "सहरसा"], ae: ["Patna", "Darbhanga", "Gaya", "Saharsa"], c: 1, exh: "दरभंगा के कादिराबाद में बना है।", exe: "Located in Kadirabad, Darbhanga.", sec: "Energy" },
-                    { qh: "BPSC के अध्यक्ष कौन हैं?", qe: "Who is the Chairman of BPSC?", ah: ["अतुल प्रसाद", "आर.के. महाजन", "नंद किशोर", "संजय श्रोत्रिय"], ae: ["Atul Prasad", "RK Mahajan", "Nand Kishore", "Sanjay Shrotriya"], c: 2, exh: "2026 अपडेट के अनुसार नंद किशोर।", exe: "Nand Kishore as per 2026.", sec: "Appointments" }
-                ]
-            }
-        };
-
-        let currentQs = [], qIndex = 0, userAns = {}, timer, timeLeft = 0, activeMonth = "", activeSetName = "";
-
-        function showView(id) {
-            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-            window.scrollTo(0,0);
-        }
-
-        function showMonthlyView() {
-            showView('monthly-view');
-            document.getElementById('month-list').innerHTML = Object.keys(database).map(m => `<button class="month-btn" onclick="showSetView('${m}')">${m}</button>`).join('');
-        }
-
-        function showSetView(month) {
-            activeMonth = month; showView('set-view');
-            document.getElementById('month-title').innerText = month;
-            document.getElementById('set-list').innerHTML = Object.keys(database[month]).map(s => `<button class="set-btn" onclick="prepareSettings('${s}')">${s}</button>`).join('');
-        }
-
-        function prepareSettings(s) { activeSetName = s; showView('settings-view'); }
-
-        function startQuizNow() {
-            currentQs = database[activeMonth][activeSetName];
-            qIndex = 0; userAns = {};
-            timeLeft = parseInt(document.getElementById('timeLimitInput').value) * 60;
-            showView('quiz-view');
-            loadQuestion();
-            startTimer();
-        }
-
-        function startTimer() {
-            clearInterval(timer);
-            timer = setInterval(() => {
-                let m = Math.floor(timeLeft / 60), s = timeLeft % 60;
-                document.getElementById('timer-display').innerText = `Time: ${m}:${s < 10 ? '0' : ''}${s}`;
-                if (timeLeft-- <= 0) { clearInterval(timer); finishQuiz(); }
-            }, 1000);
-        }
-
-        function loadQuestion() {
-            const q = currentQs[qIndex];
-            document.getElementById('q-count').innerText = `Q ${qIndex + 1} / ${currentQs.length}`;
-            document.getElementById('question-area').innerHTML = `<div class="q-text"><b>H:</b> ${q.qh}</div><div class="q-text" style="color:#666"><b>E:</b> ${q.qe}</div>`;
-            document.getElementById('options-list').innerHTML = q.ah.map((opt, i) => `
-                <div class="option ${userAns[qIndex] === i ? 'selected' : ''}" onclick="saveAns(${i})"><b>${opt}</b> <br> <small>${q.ae[i]}</small></div>
-            `).join('');
-            const isLast = qIndex === currentQs.length - 1;
-            document.getElementById('nextBtn').style.display = isLast ? 'none' : 'block';
-            document.getElementById('finalSubmitBtn').style.display = isLast ? 'block' : 'none';
-        }
-
-        function saveAns(i) { userAns[qIndex] = i; loadQuestion(); }
-        function changeQuestion(n) { if(qIndex + n >= 0 && qIndex + n < currentQs.length) { qIndex += n; loadQuestion(); } }
-
-        function finishQuiz() {
-            clearInterval(timer); showView('result-view');
-            let correct = 0, wrong = 0, neg = parseFloat(document.getElementById('negMarkInput').value), weakAreas = {};
-            currentQs.forEach((q, i) => {
-                if(userAns[i] === q.c) correct++;
-                else if(userAns[i] !== undefined) {
-                    wrong++;
-                    if(!weakAreas[q.sec]) weakAreas[q.sec] = [];
-                    weakAreas[q.sec].push(i);
-                }
-            });
-            document.getElementById('res-total').innerText = currentQs.length;
-            document.getElementById('res-correct').innerText = correct;
-            document.getElementById('res-wrong').innerText = wrong;
-            document.getElementById('res-score').innerText = (correct - (wrong * neg)).toFixed(2);
-
-            let aHtml = "<h3>Analysis (Click Q No. for Solution):</h3>";
-            for(let s in weakAreas) {
-                let links = weakAreas[s].map(idx => `<span class="q-link" onclick="showSolutions(${idx})">Q${idx+1}</span>`).join(' ');
-                aHtml += `<p>🚩 <b>${s}:</b> ${links}</p>`;
-            }
-            document.getElementById('analysis-box').innerHTML = Object.keys(weakAreas).length ? aHtml : "🌟 Perfect!";
-        }
-
-        function showSolutions(mode) {
-            showView('solution-view');
-            let targetQs = mode === 'all' ? currentQs.map((_, i) => i) : [mode];
-            
-            document.getElementById('solution-list').innerHTML = targetQs.map(i => {
-                let q = currentQs[i];
-                let uIdx = userAns[i];
-                let opts = q.ah.map((opt, oi) => {
-                    let cls = "sol-option";
-                    if(oi === q.c) cls += " correct-pick";
-                    else if(oi === uIdx) cls += " wrong-pick";
-                    return `<div class="${cls}">${opt} (${q.ae[oi]})</div>`;
-                }).join('');
-
-                return `
-                <div class="sol-card">
-                    <p><b>Q${i+1}: ${q.qh}</b></p>
-                    <div class="options-box">${opts}</div>
-                    <div class="exp-content"><b>Explanation:</b><br>H: ${q.exh}<br>E: ${q.exe}</div>
-                </div>`;
-            }).join('');
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
